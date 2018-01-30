@@ -18,7 +18,7 @@ public class SequencerButton extends ToggleButton {
 
     public SequencerButton(Context context) {
         super(context);
-       // parent.addView(this);
+
         this.setLayoutParams(new LinearLayout.LayoutParams(80, 100));
         this.setTextOff("");
         this.setTextOn("");

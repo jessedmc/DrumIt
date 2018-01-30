@@ -1,6 +1,7 @@
 package com.creation.diz.drumit.sequencer;
 
 import com.creation.diz.drumit.itemlist.Matchable;
+import com.creation.diz.drumit.samples.Sample;
 import com.creation.diz.drumit.samples.SampleList;
 
 import java.io.Serializable;
@@ -10,9 +11,9 @@ import java.io.Serializable;
  */
 
 public class SequencerCell implements Matchable<Integer>, Serializable {
-
     private static int rollingIndex = -1;
     private int id;
+    private Sample sample;
 
     public SequencerCell() {
         SequencerCell.rollingIndex++;

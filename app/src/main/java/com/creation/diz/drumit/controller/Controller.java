@@ -38,7 +38,11 @@ public class Controller {
     }
 
     public int getNumOfSequencerCells() {
-        return Model.instance().getNumOFCells();
+        return Model.instance().NUM_OF_CELLS;
+    }
+
+    public int getNumOfSamples() {
+        return Model.instance().NUM_OF_SAMPLES;
     }
 
 }
