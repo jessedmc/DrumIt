@@ -14,10 +14,16 @@ import com.creation.diz.drumit.model.Model;
 import com.creation.diz.drumit.samples.Sample;
 
 public class MainActivity extends AppCompatActivity {
+    // XML controls
     TextView textView;
     LinearLayout linearLayoutSample;
+
+    // dynamic controls
     SequencerButton btnSequencer[];
     SampleButton btnSample[];
+
+    // data
+
 
 
     @Override
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         // create sample buttons for GUI
         this.btnSample = new SampleButton[Controller.instance().getNumOfSamples()];
         for (int i = 0; i < Controller.instance().getNumOfSamples(); i++) {
-            this.btnSample[i] = new SampleButton(this.getApplicationContext(), linearLayoutSample, this);
+            this.btnSample[i] = new SampleButton(this.getApplicationContext(), linearLayoutSample, this, i);
             //this.textView.setText("btnSample[i] got to i = " + i);
         }
         //this.linearLayoutSample.setTop((int)(0.2 * SampleButton.getScreenHeight()));

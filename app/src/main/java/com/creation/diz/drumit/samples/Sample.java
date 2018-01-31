@@ -14,15 +14,13 @@ import java.io.Serializable;
 
 public class Sample implements Matchable<Integer>, Serializable, Changeable {
     private boolean changed = false;
-    private static int rollingIndex= -1;
     private static int numOfSamples = 10;
     private static String[] nameList;// = new String[Sample.numOfSamples];
     private int index;
     private Uri uri;
     // Uri uri = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.uhi2);
-    public Sample() {
-        Sample.rollingIndex++;
-        this.index = rollingIndex;
+    public Sample(int index) {
+        this.index = index;
 
         // create name list to connect code to wav files in resources/raw/drumkitNum default = 0
         if (nameList == null) {
@@ -67,6 +65,9 @@ public class Sample implements Matchable<Integer>, Serializable, Changeable {
     // Matchable
     @Override
     public boolean matches(Integer id) {
+        if (this.index == id.intValue()) {
+            return true;
+        }
         return false;
     }
 }

@@ -31,7 +31,7 @@ public class Model {
 
         // make sample list
         for (int i = 0; i < this.NUM_OF_SAMPLES; i++) {
-            this.sampleList.add(new Sample());
+            this.sampleList.add(new Sample(i));
         }
 
         // make sequencerCell list

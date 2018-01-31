@@ -26,6 +26,9 @@ public class HandleBtnSampleClickEvent {
     }
 
     public void handle(int index) {
+        // search through sampleList and set currentSample
         //Controller.instance().selectBtnSequencer(index);
     }
+
+
 }
