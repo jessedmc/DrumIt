@@ -47,6 +47,11 @@ public class Sample implements Matchable<Integer>, Serializable, Changeable {
 
     }
 
+    @Override
+    public String toString() {
+        return "sample[ " + this.index + "]";
+    }
+
     // Changeable
     @Override
     public void setChanged() {

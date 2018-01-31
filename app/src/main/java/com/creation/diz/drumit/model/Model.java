@@ -10,6 +10,8 @@ import com.creation.diz.drumit.samples.SampleList;
 import com.creation.diz.drumit.sequencer.SequencerCell;
 import com.creation.diz.drumit.sequencer.SequencerCellList;
 
+import java.util.Iterator;
+
 /**
  * Created by Diz on 1/27/2018.
  */
@@ -68,6 +70,27 @@ public class Model {
     // for testing
     public void toTextView(String str) {
         Controller.instance().toTextView(str);
+    }
+
+    public void setCurrentSample(int index) {
+        Iterator<Sample> iter = this.sampleList.iterator();
+        while (iter.hasNext()) {
+            Sample sample = (Sample)iter.next();
+            Model.instance().toTextView("sample.index: " + sample.getIndex() + " sample: " + sample.toString() + " paramIndex: " + index);
+            if (sample.getIndex() == index) {
+                this.currentSample = sample;
+                break;
+            }
+        }
+       // this.toTextView(" currentSample: " + this.currentSample.toString());
+        if (Model.instance().getCurrentSample() == null) {
+            //Model.instance().toTextView("current sample is null");
+        }
+        else {
+            Model.instance().toTextView("current sample: " + this.currentSample.getIndex());
+            Model.instance().getCurrentSample().setChanged();
+            Model.instance().updateView();
+        }
     }
 
     public void selectSequencerCell(int index) {

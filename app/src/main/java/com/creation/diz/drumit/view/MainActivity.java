@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -76,7 +77,10 @@ public class MainActivity extends AppCompatActivity {
 
         // sample selector Space
         this.sampleSelector.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleselectortrans));
-        this.sampleSelector.setVisibility(View.INVISIBLE);
+        //this.sampleSelector.setVisibility(View.INVISIBLE);
+        //this.sampleSelector.setLayoutParams(new ViewGroup.LayoutParams(100, 50));
+        this.sampleSelector.setLeft(100);
+        this.sampleSelector.setTop(300);
 
 
     } // end onCreate()
@@ -96,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         // sample selected
         if (Controller.instance().getCurrentSample().hasChanged()) {
+            this.textView.setText(this.textView.getText() + "  entered sample update");
             int sampleIndex = -1;
             sampleIndex = Controller.instance().getCurrentSample().getIndex();
             int left = 0, top = 0;
@@ -103,9 +108,12 @@ public class MainActivity extends AppCompatActivity {
             left = this.btnSample[sampleIndex].getLeft();
             top = this.btnSample[sampleIndex].getTop();
 
-            this.sampleSelector.setLeft(left - 10);
-            this.sampleSelector.setTop(top - 10);
+           // this.sampleSelector.setLeft(left - 10);
+           // this.sampleSelector.setTop(top - 10);
+            this.sampleSelector.setLeft(100);
+            this.sampleSelector.setTop(300);
             this.sampleSelector.setVisibility(View.VISIBLE);
+            this.sampleSelector.bringToFront();
 
         }
     }
