@@ -41,6 +41,9 @@ public class Model {
             this.sequencerCellList.add(new SequencerCell());
         }
 
+        // set to pause mode
+        this.pauseMode.start();
+
     }
 
     // singleton method

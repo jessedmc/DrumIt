@@ -35,7 +35,9 @@ public class SequencerButton extends ToggleButton {
         parent.addView(this);//, this.getLayoutParams());
 
         // -- button width, height
-        this.setLayoutParams(new LinearLayout.LayoutParams(70, 100));
+        this.setLayoutParams(new LinearLayout.LayoutParams(60, 90));
+
+
 
         // -- add a space after the button unless its the last button
         Space space = new Space(this.getContext());

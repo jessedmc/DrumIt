@@ -28,7 +28,8 @@ public class Sample implements Matchable<Integer>, Serializable, Changeable {
         }
 
         // create uri
-        this.uri = Uri.parse("android.resource://" + this.getClass().getPackage() + "/res/raw/0/" + Sample.nameList[this.index] + ".wav");
+       // this.uri = Uri.parse("android.resource://" + this.getClass().getPackage() + "/res/raw/" + Sample.nameList[this.index] + ".wav");
+        this.uri = Uri.parse("android.resource://com.creation.diz.drumit/" + R.raw.kick);
 
     }
 
@@ -36,11 +37,11 @@ public class Sample implements Matchable<Integer>, Serializable, Changeable {
         Sample.nameList = new String[Sample.numOfSamples];
         Sample.nameList[0] = "kick";
         Sample.nameList[1] = "snare";
-        Sample.nameList[2] = "lowTom";
-        Sample.nameList[3] = "hiTom";
-        Sample.nameList[4] = "rimShot";
-        Sample.nameList[5] = "closedHiHat";
-        Sample.nameList[6] = "openHiHat";
+        Sample.nameList[2] = "lowtom";
+        Sample.nameList[3] = "hitom";
+        Sample.nameList[4] = "rimshot";
+        Sample.nameList[5] = "closedhihat";
+        Sample.nameList[6] = "openhihat";
         Sample.nameList[7] = "cymbal";
         Sample.nameList[8] = "fx1";
         Sample.nameList[9] = "fx2";
@@ -84,4 +85,6 @@ public class Sample implements Matchable<Integer>, Serializable, Changeable {
     public Uri getUri() {
         return uri;
     }
+
+
 }

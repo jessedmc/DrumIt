@@ -54,6 +54,8 @@ public class SampleButton extends ToggleButton {
         // -- sample button width, height
         this.setLayoutParams(new LinearLayout.LayoutParams(100, 50));
 
+
+
         // -- add a space after the button unless its the last button
         Space space = new Space(this.getContext());
         space.setMinimumWidth(10);

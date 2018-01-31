@@ -1,13 +1,16 @@
 package com.creation.diz.drumit.view;
 
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
@@ -23,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     LinearLayout linearLayoutSample;
     LinearLayout linearLayoutSequencer;
-    Space sampleSelector;
+    ImageView sampleSelector;
+    ConstraintLayout rootLayout;
 
     // dynamic controls
     SequencerButton btnSequencer[];
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // data
-
+    MediaPlayer mediaPlayer = new MediaPlayer();
 
 
     @Override
@@ -52,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
         // identify xml controls, controls from design view
         textView = (TextView)findViewById(R.id.textView);
         this.linearLayoutSample = (LinearLayout)findViewById(R.id.linearLayoutSample);
-        this.sampleSelector = (Space)findViewById(R.id.sampleSelector);
+        this.sampleSelector = (ImageView)findViewById(R.id.sampleSelector);
         this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
+        this.rootLayout = (ConstraintLayout)findViewById(R.id.rootLayout);
 
         // create sequencer buttons for GUI
         this.btnSequencer = new SequencerButton[Controller.instance().getNumOfSequencerCells()];
@@ -73,14 +78,14 @@ public class MainActivity extends AppCompatActivity {
         // move the sample linear layout right a little
         this.linearLayoutSample.setPadding(20, 0, 0, 0);
 
+        this.linearLayoutSequencer.setPadding(10, 0, 10, 50);
+
      //   this.textView.setText("screenWidth: " + SampleButton.getScreenWidth() + "  screenHeight: " + SampleButton.getScreenHeight() + "  btnSample1.left: " + this.btnSample[1].getLeft());
 
-        // sample selector Space
-        this.sampleSelector.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleselectortrans));
-        //this.sampleSelector.setVisibility(View.INVISIBLE);
-        //this.sampleSelector.setLayoutParams(new ViewGroup.LayoutParams(100, 50));
-        this.sampleSelector.setLeft(100);
-        this.sampleSelector.setTop(300);
+        // sample selector
+        this.sampleSelector.setImageDrawable(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleselectortrans));
+        this.sampleSelector.setVisibility(View.INVISIBLE);
+
 
 
     } // end onCreate()
@@ -100,20 +105,41 @@ public class MainActivity extends AppCompatActivity {
 
         // sample selected
         if (Controller.instance().getCurrentSample().hasChanged()) {
-            this.textView.setText(this.textView.getText() + "  entered sample update");
             int sampleIndex = -1;
             sampleIndex = Controller.instance().getCurrentSample().getIndex();
             int left = 0, top = 0;
 
+            // layout
             left = this.btnSample[sampleIndex].getLeft();
             top = this.btnSample[sampleIndex].getTop();
-
-           // this.sampleSelector.setLeft(left - 10);
-           // this.sampleSelector.setTop(top - 10);
-            this.sampleSelector.setLeft(100);
-            this.sampleSelector.setTop(300);
+            this.textView.setText(this.textView.getText() + "  entered sample update btnSamle.left: " + left + " btnSample.top: " + top);
+            ViewGroup.LayoutParams params = this.sampleSelector.getLayoutParams();
+            params.width = 113;
+            params.height = 90;
+            this.sampleSelector.setTranslationX(left + 10);
+            this.sampleSelector.setTranslationY(20);
             this.sampleSelector.setVisibility(View.VISIBLE);
-            this.sampleSelector.bringToFront();
+            this.rootLayout.bringChildToFront(this.sampleSelector);
+
+            // play sound if in pause mode
+            if (Model.instance().getPauseMode().isInPauseMode()) {  // change to controller not model
+                this.mediaPlayer = MediaPlayer.create(this.getApplicationContext(), R.raw.fx1);
+                try {
+                    //this.mediaPlayer.setDataSource(this.getApplicationContext(), Model.instance().getCurrentSample().getUri());
+                    //this.mediaPlayer.setDataSource(this.getApplicationContext(), Model.instance().getCurrentSample().getUri());
+                    //this.mediaPlayer.prepare();
+                    this.mediaPlayer.start();
+                   // this.mediaPlayer.release();
+
+                }
+                catch (Exception err) {
+                    this.textView.setText("error on pause mode sample play");
+                    err.printStackTrace();
+                }
+                //this.mediaPlayer.release();
+
+
+            }
 
         }
     }
