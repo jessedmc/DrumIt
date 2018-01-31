@@ -1,5 +1,8 @@
 package com.creation.diz.drumit.model;
 
+import android.widget.Toast;
+
+import com.creation.diz.drumit.controller.Controller;
 import com.creation.diz.drumit.modes.PauseMode;
 import com.creation.diz.drumit.modes.PlayMode;
 import com.creation.diz.drumit.samples.Sample;
@@ -23,10 +26,7 @@ public class Model {
     private PlayMode playMode = PlayMode.instance();
     private PauseMode pauseMode = PauseMode.instance();
 
-
-    /**
-     * Make it a singleton
-     */
+    // singleton constructor
     private Model() {
 
         // make sample list
@@ -41,16 +41,17 @@ public class Model {
 
     }
 
-    /**
-     * Return the instance
-     *
-     * @return the object
-     */
+    // singleton method
     public static Model instance() {
         if (instance == null) {
             instance = new Model();
         }
         return instance;
+    }
+
+    // update
+    public void updateView() {
+        Controller.instance().updateView();
     }
 
     public void startPlayMode() {
@@ -59,12 +60,26 @@ public class Model {
         this.playMode.setChanged();
     }
 
+    // toast msg, for testing
+    public void makeToast(String str) {
+        Toast toast = Toast.makeText(Controller.instance().getContext(), str, Toast.LENGTH_LONG);
+    }
+
+    // for testing
+    public void toTextView(String str) {
+        Controller.instance().toTextView(str);
+    }
+
     public void selectSequencerCell(int index) {
         this.selectedSequencerCell = index;
     }
 
     public Sample getCurrentSample() {
         return currentSample;
+    }
+
+    public void setCurrentSample(Sample sample) {
+        this.currentSample = currentSample;
     }
 
     public SequencerCell getCurrentSequencerCell() {
@@ -77,5 +92,33 @@ public class Model {
 
     public PauseMode getPauseMode() {
         return pauseMode;
+    }
+
+    public int getCurrentDrumKit() {
+        return currentDrumKit;
+    }
+
+    public void setCurrentDrumKit(int currentDrumKit) {
+        this.currentDrumKit = currentDrumKit;
+    }
+
+    public SequencerCellList getSequencerCellList() {
+        return sequencerCellList;
+    }
+
+    public void setSequencerCellList(SequencerCellList sequencerCellList) {
+        this.sequencerCellList = sequencerCellList;
+    }
+
+    public SampleList getSampleList() {
+        return sampleList;
+    }
+
+    public void setSampleList(SampleList sampleList) {
+        this.sampleList = sampleList;
+    }
+
+    public void setCurrentSequencerCell(SequencerCell currentSequencerCell) {
+        this.currentSequencerCell = currentSequencerCell;
     }
 }

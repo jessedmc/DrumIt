@@ -30,4 +30,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"></LinearLayout>
 
+    <Space
+        android:id="@+id/sampleSelector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="246dp"
+        tools:layout_editor_absoluteY="499dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutSequencer"
+        android:layout_width="576dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="288dp"></LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

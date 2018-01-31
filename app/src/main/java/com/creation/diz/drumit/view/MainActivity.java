@@ -2,10 +2,13 @@ package com.creation.diz.drumit.view;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.creation.diz.drumit.R;
@@ -14,13 +17,17 @@ import com.creation.diz.drumit.model.Model;
 import com.creation.diz.drumit.samples.Sample;
 
 public class MainActivity extends AppCompatActivity {
+
     // XML controls
     TextView textView;
     LinearLayout linearLayoutSample;
+    LinearLayout linearLayoutSequencer;
+    Space sampleSelector;
 
     // dynamic controls
     SequencerButton btnSequencer[];
     SampleButton btnSample[];
+
 
     // data
 
@@ -44,13 +51,15 @@ public class MainActivity extends AppCompatActivity {
         // identify xml controls, controls from design view
         textView = (TextView)findViewById(R.id.textView);
         this.linearLayoutSample = (LinearLayout)findViewById(R.id.linearLayoutSample);
-/*
+        this.sampleSelector = (Space)findViewById(R.id.sampleSelector);
+        this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
+
         // create sequencer buttons for GUI
         this.btnSequencer = new SequencerButton[Controller.instance().getNumOfSequencerCells()];
         for (int i = 0; i < Controller.instance().getNumOfSequencerCells(); i++) {
-            this.btnSequencer[i] = new SequencerButton(this.getApplicationContext());
+            this.btnSequencer[i] = new SequencerButton(this.getApplicationContext(), this.linearLayoutSequencer, i);
         }
-        */
+
 
         // create sample buttons for GUI
         this.btnSample = new SampleButton[Controller.instance().getNumOfSamples()];
@@ -65,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
      //   this.textView.setText("screenWidth: " + SampleButton.getScreenWidth() + "  screenHeight: " + SampleButton.getScreenHeight() + "  btnSample1.left: " + this.btnSample[1].getLeft());
 
+        // sample selector Space
+        this.sampleSelector.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleselectortrans));
+        this.sampleSelector.setVisibility(View.INVISIBLE);
 
 
     } // end onCreate()
@@ -83,7 +95,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // sample selected
-        if (Model.instance().getCurrentSample().hasChanged()) {
+        if (Controller.instance().getCurrentSample().hasChanged()) {
+            int sampleIndex = -1;
+            sampleIndex = Controller.instance().getCurrentSample().getIndex();
+            int left = 0, top = 0;
+
+            left = this.btnSample[sampleIndex].getLeft();
+            top = this.btnSample[sampleIndex].getTop();
+
+            this.sampleSelector.setLeft(left - 10);
+            this.sampleSelector.setTop(top - 10);
+            this.sampleSelector.setVisibility(View.VISIBLE);
 
         }
     }

@@ -1,6 +1,9 @@
 package com.creation.diz.drumit.controller;
 
+import android.content.Context;
+
 import com.creation.diz.drumit.model.Model;
+import com.creation.diz.drumit.samples.Sample;
 import com.creation.diz.drumit.view.MainActivity;
 
 /**
@@ -10,18 +13,13 @@ import com.creation.diz.drumit.view.MainActivity;
 public class Controller {
     private static Controller instance;
     private MainActivity display;
-    /**
-     * Make it a singleton
-     */
+
+    // singleton constructor
     private Controller() {
 
     }
 
-    /**
-     * Return the instance
-     *
-     * @return the object
-     */
+    // singleton
     public static Controller instance() {
         if (instance == null) {
             instance = new Controller();
@@ -29,8 +27,28 @@ public class Controller {
         return instance;
     }
 
+    // update
+    public void updateView() {
+        this.display.update();
+    }
+
     public void selectBtnSequencer(int index) {
         Model.instance().selectSequencerCell(index);
+    }
+
+    // get context, for testing
+    public Context getContext() {
+        return this.display.getApplicationContext();
+    }
+
+    // for testing
+    public void toTextView(String str) {
+        this.display.setTextView(str);
+    }
+
+    // ****************** Getters Setters ******************** //
+    public Sample getCurrentSample() {
+        return Model.instance().getCurrentSample();
     }
 
     public void setDisplay(MainActivity display) {

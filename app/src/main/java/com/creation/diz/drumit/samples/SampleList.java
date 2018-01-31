@@ -31,16 +31,5 @@ public class SampleList extends ItemList<Sample, Integer> {
         return instance;
     }
 
-    /**
-     * Checks whether a member with a given member id exists.
-     *
-     * @param memberId
-     *            the id of the member
-     * @return true iff member exists
-     *
-     */
-    @Override
-    public Sample search(Integer id) {
-        return super.search(id);
-    }
+
 }

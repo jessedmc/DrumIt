@@ -1,5 +1,9 @@
 package com.creation.diz.drumit.handler;
 
+import android.widget.Toast;
+
+import com.creation.diz.drumit.model.Model;
+
 /**
  * Created by Diz on 1/29/2018.
  */
@@ -26,8 +30,21 @@ public class HandleBtnSampleClickEvent {
     }
 
     public void handle(int index) {
-        // search through sampleList and set currentSample
-        //Controller.instance().selectBtnSequencer(index);
+        this.setCurrentSampleInGui(index);
+    }
+
+    // search through sampleList and set currentSample
+    public void setCurrentSampleInGui(int index) {
+        Model.instance().toTextView("got to setCurrentSampleInGui() sampleList len: " + Model.instance().getSampleList().size() + "sampleList[0].index: " + Model.instance().getSampleList().get(0).getIndex() + " index param: " + index);
+        Model.instance().setCurrentSample(Model.instance().getSampleList().search(index));
+        if (Model.instance().getCurrentSample() == null) {
+            //Model.instance().toTextView("current sample is null");
+        }
+        else {
+            Model.instance().toTextView("current sample is NOT null");
+            Model.instance().getCurrentSample().setChanged();
+            Model.instance().updateView();
+        }
     }
 
 

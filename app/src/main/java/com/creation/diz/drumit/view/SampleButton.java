@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -16,6 +17,7 @@ import com.creation.diz.drumit.R;
 import com.creation.diz.drumit.events.BtnSampleClickEvent;
 import com.creation.diz.drumit.events.BtnSequencerClickEvent;
 import com.creation.diz.drumit.handler.Handler;
+import com.creation.diz.drumit.model.Model;
 import com.creation.diz.drumit.samples.SampleList;
 
 /**
@@ -74,9 +76,11 @@ public class SampleButton extends ToggleButton {
         // on click
         this.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                Model.instance().toTextView("sample click");
                 Handler.instance().handleEvent(BtnSampleClickEvent.instance(), ((SampleButton)view).index);
             }
         });
+
     }
 
 

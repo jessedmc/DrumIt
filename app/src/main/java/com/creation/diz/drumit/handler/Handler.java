@@ -33,7 +33,7 @@ public class Handler {
     }
 
     public void handleEvent(BtnSampleClickEvent event, int index) {
-        HandleBtnSequencerClickEvent.instance().handle(index);
+        HandleBtnSampleClickEvent.instance().handle(index);
     }
 }
 

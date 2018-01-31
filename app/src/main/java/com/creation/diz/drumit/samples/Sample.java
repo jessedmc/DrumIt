@@ -65,9 +65,18 @@ public class Sample implements Matchable<Integer>, Serializable, Changeable {
     // Matchable
     @Override
     public boolean matches(Integer id) {
-        if (this.index == id.intValue()) {
+        if (this.index == id) {
             return true;
         }
         return false;
+    }
+
+    // getters
+    public int getIndex() {
+        return index;
+    }
+
+    public Uri getUri() {
+        return uri;
     }
 }
