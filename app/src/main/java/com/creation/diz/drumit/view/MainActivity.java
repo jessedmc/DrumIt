@@ -123,20 +123,28 @@ public class MainActivity extends AppCompatActivity {
 
             // play sound if in pause mode
             if (Model.instance().getPauseMode().isInPauseMode()) {  // change to controller not model
-                this.mediaPlayer = MediaPlayer.create(this.getApplicationContext(), R.raw.fx1);
+                this.textView.setText(this.textView.getText() + " in the play part");
+                this.mediaPlayer = MediaPlayer.create(this.getApplicationContext(), R.raw.fx2);
                 try {
                     //this.mediaPlayer.setDataSource(this.getApplicationContext(), Model.instance().getCurrentSample().getUri());
                     //this.mediaPlayer.setDataSource(this.getApplicationContext(), Model.instance().getCurrentSample().getUri());
                     //this.mediaPlayer.prepare();
                     this.mediaPlayer.start();
-                   // this.mediaPlayer.release();
+                    this.mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            mp.stop();
+                            mp.release();
+                        }
+                    });
+                  
 
                 }
                 catch (Exception err) {
                     this.textView.setText("error on pause mode sample play");
                     err.printStackTrace();
                 }
-                //this.mediaPlayer.release();
+                this.mediaPlayer.release();
 
 
             }
