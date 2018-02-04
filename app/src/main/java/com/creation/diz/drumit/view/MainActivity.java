@@ -96,11 +96,12 @@ public class MainActivity extends AppCompatActivity {
         // current sample changed so modify the sequencer cells to represent only the current sample
         if (Controller.instance().getCurrentSampleHasChanged()) {
             // sequencer cells that have current sample
-            for (int i = 0; i < this.btnSequencer.length; i++) {
-                for (int j = 0; j < this.btnSample.length; j++) {
-                    if (Controller.instance().getCellAndSample(i, j)) {
+            for (int i = 0; i < this.btnSequencer.length; i++) {   // *** There is an issue here, not right
+                for (int j = 0; j < Controller.instance().getCellSampleListLength(i); j++) {
+                    if (Controller.instance().getCellAndSampleMatchCurrentSample(i, j)) {
                         this.textView.setText("in main update getCellAndSample i: " + i + "j: " + j);
                         this.setBtnSequencerBackground(i, j);
+                        break;
                     }
                     else {  // set default backgound if sample is not in sequencer cell
                         this.btnSequencer[i].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.emptycell));

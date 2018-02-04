@@ -54,11 +54,18 @@ public class Controller {
         return Model.instance().getCurrentSample().hasChanged();
     }
 
-    public boolean getCellAndSample(int i, int j) {
+    public int getCellSampleListLength(int index) {
+        SequencerCell cell = Model.instance().getSequencerCellList().search(index);
+        return cell.getSampleList().size();
+    }
+
+    public boolean getCellAndSampleMatchCurrentSample(int i, int j) {
         SequencerCell cell = Model.instance().getSequencerCellList().search(i);
         Sample sample = cell.getSampleList().search(j);
         if (sample != null) {
-            return true;
+            if (sample.matches(Model.instance().getCurrentSample().getIndex())) {
+                return true;
+            }
         }
         return false;
     }
