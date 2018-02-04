@@ -4,7 +4,10 @@ import android.content.Context;
 
 import com.creation.diz.drumit.model.Model;
 import com.creation.diz.drumit.samples.Sample;
+import com.creation.diz.drumit.sequencer.SequencerCell;
 import com.creation.diz.drumit.view.MainActivity;
+
+import java.util.Iterator;
 
 /**
  * Created by Diz on 1/27/2018.
@@ -47,6 +50,39 @@ public class Controller {
     }
 
     // ****************** Getters Setters ******************** //
+    public boolean getCurrentSampleHasChanged() {
+        return Model.instance().getCurrentSample().hasChanged();
+    }
+
+    public boolean getCellAndSample(int i, int j) {
+        SequencerCell cell = Model.instance().getSequencerCellList().search(i);
+        Sample sample = cell.getSampleList().search(j);
+        if (sample != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getCurrentSequencerCellIndex() {
+        return Model.instance().getCurrentSequencerCell().getIndex();
+    }
+
+    public int getCurrentSampleIndex() {
+        return Model.instance().getCurrentSample().getIndex();
+    }
+
+    public int getSequencerCellListHasChanged() {
+        Iterator<SequencerCell> iter = Model.instance().getSequencerCellList().iterator();
+        while (iter.hasNext()) {
+            SequencerCell cell = (SequencerCell)iter.next();
+            if (cell.hasChanged()) {
+                //Model.instance().toTextView("in controller seqCellHasChanged found index: " + cell.getIndex());
+                return cell.getIndex();
+            }
+        }
+        return -1;
+    }
+
     public Sample getCurrentSample() {
         return Model.instance().getCurrentSample();
     }

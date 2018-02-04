@@ -1,5 +1,6 @@
 package com.creation.diz.drumit.sequencer;
 
+import com.creation.diz.drumit.changeable.Changeable;
 import com.creation.diz.drumit.itemlist.Matchable;
 import com.creation.diz.drumit.samples.Sample;
 import com.creation.diz.drumit.samples.SampleList;
@@ -10,39 +11,51 @@ import java.io.Serializable;
  * Created by Diz on 1/27/2018.
  */
 
-public class SequencerCell implements Matchable<Integer>, Serializable {
-    private static int rollingIndex = -1;
-    private int id;
-    private Sample sample;
+public class SequencerCell implements Matchable<Integer>, Serializable, Changeable {
+    private boolean changed = false;
+    private int index;
+    private SampleList sampleList;
 
-    public SequencerCell() {
-        SequencerCell.rollingIndex++;
-        this.id = SequencerCell.rollingIndex;
-
+    public SequencerCell(int index) {
+        this.index = index;
+        this.sampleList = new SampleList();
     }
 
     @Override
     public boolean matches(Integer id) {
-        if (this.id == id) {
+        if (this.index == id) {
             return true;
         }
         return false;
     }
 
-
-    public static int getRollingIndex() {
-        return rollingIndex;
+    public SampleList getSampleList() {
+        return sampleList;
     }
 
-    public static void setRollingIndex(int rollingIndex) {
-        SequencerCell.rollingIndex = rollingIndex;
+    public void setSampleList(SampleList sampleList) {
+        this.sampleList = sampleList;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public void setChanged() {
+        this.changed = true;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public boolean hasChanged() {
+        if (this.changed) {
+            this.changed = false;
+            return true;
+        }
+        return false;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

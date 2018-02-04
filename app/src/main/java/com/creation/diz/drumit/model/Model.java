@@ -22,7 +22,7 @@ public class Model {
     private int selectedSequencerCell = 0;
     private int currentDrumKit = 0;
     private SequencerCellList sequencerCellList = SequencerCellList.instance();
-    private SampleList sampleList = SampleList.instance();
+    private SampleList sampleList;
     private Sample currentSample;
     private SequencerCell currentSequencerCell;
     private PlayMode playMode = PlayMode.instance();
@@ -30,6 +30,8 @@ public class Model {
 
     // singleton constructor
     private Model() {
+        this.sampleList = new SampleList();
+
 
         // make sample list
         for (int i = 0; i < this.NUM_OF_SAMPLES; i++) {
@@ -38,7 +40,7 @@ public class Model {
 
         // make sequencerCell list
         for (int i = 0; i < this.NUM_OF_CELLS; i++) {
-            this.sequencerCellList.add(new SequencerCell());
+            this.sequencerCellList.add(new SequencerCell(i));
         }
 
         // set to pause mode
@@ -144,7 +146,18 @@ public class Model {
         this.sampleList = sampleList;
     }
 
-    public void setCurrentSequencerCell(SequencerCell currentSequencerCell) {
-        this.currentSequencerCell = currentSequencerCell;
+    public void setCurrentSequencerCell(int index) {
+        SequencerCell cell = this.sequencerCellList.search(index);
+        if (cell != null) {
+            this.currentSequencerCell = cell;
+        }
+        /*
+        Iterator<SequencerCell> iter = this.sequencerCellList.iterator();
+        while (iter.hasNext()) {
+            SequencerCell cell = (SequencerCell)iter.next();
+            if (cell.getIndex() == index) {
+                this.currentSequencerCell = cell;
+            }
+        } */
     }
 }

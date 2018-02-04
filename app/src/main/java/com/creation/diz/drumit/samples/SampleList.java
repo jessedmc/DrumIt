@@ -11,25 +11,13 @@ import com.creation.diz.drumit.sequencer.SequencerCellList;
 public class SampleList extends ItemList<Sample, Integer> {
 
     private static final long serialVersionUID = 1L;
-    private static SampleList instance;
 
-    /*
-     * Private constructor for singleton pattern
-     */
-    private SampleList() {
+
+
+    public SampleList() {
+
     }
 
-    /**
-     * Supports the singleton pattern
-     *
-     * @return the singleton object
-     */
-    public static SampleList instance() {
-        if (instance == null) {
-            instance = new SampleList();
-        }
-        return instance;
-    }
 
 
 }

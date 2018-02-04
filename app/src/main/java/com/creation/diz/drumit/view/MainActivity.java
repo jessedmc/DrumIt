@@ -20,6 +20,8 @@ import com.creation.diz.drumit.controller.Controller;
 import com.creation.diz.drumit.model.Model;
 import com.creation.diz.drumit.samples.Sample;
 
+import java.util.ResourceBundle;
+
 public class MainActivity extends AppCompatActivity {
 
     // XML controls
@@ -91,20 +93,23 @@ public class MainActivity extends AppCompatActivity {
     } // end onCreate()
 
     public void update() {
-        // play / pause modes
-        if (Model.instance().getPlayMode().hasChanged()) {
-            if (Model.instance().getPlayMode().isInPlayMode()) {    // just entered play mode
-                // MediaPlayer plays through SequencerCellList.sample here
-            }
-        }
-        if (Model.instance().getPauseMode().hasChanged()) {
-            if (Model.instance().getPauseMode().isInPauseMode()) {
-                // pause mode
-            }
-        }
+        // current sample changed so modify the sequencer cells to represent only the current sample
+        if (Controller.instance().getCurrentSampleHasChanged()) {
+            // sequencer cells that have current sample
+            for (int i = 0; i < this.btnSequencer.length; i++) {
+                for (int j = 0; j < this.btnSample.length; j++) {
+                    if (Controller.instance().getCellAndSample(i, j)) {
+                        this.textView.setText("in main update getCellAndSample i: " + i + "j: " + j);
+                        this.setBtnSequencerBackground(i, j);
+                    }
+                    else {  // set default backgound if sample is not in sequencer cell
+                        this.btnSequencer[i].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.emptycell));
+                    }
+                }
 
-        // sample selected
-        if (Controller.instance().getCurrentSample().hasChanged()) {
+            }
+
+            // display sample selector box
             int sampleIndex = -1;
             sampleIndex = Controller.instance().getCurrentSample().getIndex();
             int left = 0, top = 0;
@@ -120,7 +125,35 @@ public class MainActivity extends AppCompatActivity {
             this.sampleSelector.setTranslationY(20);
             this.sampleSelector.setVisibility(View.VISIBLE);
             this.rootLayout.bringChildToFront(this.sampleSelector);
+        }
 
+        // if there was a click on a sequencer cell
+        if (Controller.instance().getSequencerCellListHasChanged() > -1) {
+            // get index of current sample so we know which pic to change the cell to
+            int currentSampleIndex = Controller.instance().getCurrentSampleIndex();
+
+            // get index of current sequencer cell (the one that was clicked on)
+            int currentSequencerCellIndex = Controller.instance().getCurrentSequencerCellIndex();
+
+            // clicked sequncer cell change
+            this.setBtnSequencerBackground(currentSequencerCellIndex, currentSampleIndex);
+        }
+
+        // play / pause modes
+        if (Model.instance().getPlayMode().hasChanged()) {
+            if (Model.instance().getPlayMode().isInPlayMode()) {    // just entered play mode
+                // MediaPlayer plays through SequencerCellList.sample here
+            }
+        }
+        if (Model.instance().getPauseMode().hasChanged()) {
+            if (Model.instance().getPauseMode().isInPauseMode()) {
+                // pause mode
+            }
+        }
+
+
+
+            /*
             // play sound if in pause mode
             if (Model.instance().getPauseMode().isInPauseMode()) {  // change to controller not model
                 this.textView.setText(this.textView.getText() + " in the play part");
@@ -129,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     //this.mediaPlayer.setDataSource(this.getApplicationContext(), Model.instance().getCurrentSample().getUri());
                     //this.mediaPlayer.setDataSource(this.getApplicationContext(), Model.instance().getCurrentSample().getUri());
                     //this.mediaPlayer.prepare();
+                    this.mediaPlayer.setVolume(50, 50);
                     this.mediaPlayer.start();
                     this.mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
@@ -145,12 +179,47 @@ public class MainActivity extends AppCompatActivity {
                     err.printStackTrace();
                 }
                 this.mediaPlayer.release();
+                */
 
 
-            }
+    }// end update
 
+    public void setBtnSequencerBackground(int btnSequencerIndex, int sampleIndex) {
+        switch (sampleIndex) {
+            case 0:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell0));
+                break;
+            case 1:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell1));
+                break;
+            case 2:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell2));
+                break;
+            case 3:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell3));
+                break;
+            case 4:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell4));
+                break;
+            case 5:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell5));
+                break;
+            case 6:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell6));
+                break;
+            case 7:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell7));
+                break;
+            case 8:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell8));
+                break;
+            case 9:
+                this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell9));
+                break;
+            default:
         }
     }
+
 
     public void setTextView(String str) {
         textView.setText(str);
