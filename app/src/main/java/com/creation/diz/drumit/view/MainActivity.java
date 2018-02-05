@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     // XML controls
     TextView textView;
+    TextView textView2;
     LinearLayout linearLayoutSample;
     LinearLayout linearLayoutSequencer;
     ImageView sampleSelector;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         // identify xml controls, controls from design view
         textView = (TextView)findViewById(R.id.textView);
+        textView2 = (TextView)findViewById(R.id.textView2);
         this.linearLayoutSample = (LinearLayout)findViewById(R.id.linearLayoutSample);
         this.sampleSelector = (ImageView)findViewById(R.id.sampleSelector);
         this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
@@ -95,11 +97,12 @@ public class MainActivity extends AppCompatActivity {
     public void update() {
         // current sample changed so modify the sequencer cells to represent only the current sample
         if (Controller.instance().getCurrentSampleHasChanged()) {
+            Controller.instance().printSequencerAndSampleList();
             // sequencer cells that have current sample
-            for (int i = 0; i < this.btnSequencer.length; i++) {   // *** There is an issue here, not right
+            for (int i = 0; i < 16; i++) {   // *** There is an issue here, not right
                 for (int j = 0; j < Controller.instance().getCellSampleListLength(i); j++) {
                     if (Controller.instance().getCellAndSampleMatchCurrentSample(i, j)) {
-                        this.textView.setText("in main update getCellAndSample i: " + i + "j: " + j);
+                        //this.textView.setText("in main update getCellAndSample i: " + i + "j: " + j);
                         this.setBtnSequencerBackground(i, j);
                         break;
                     }
@@ -191,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell0));
                 break;
             case 1:
+                this.textView.setText("in main setBtnSeqBack case 1");
                 this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell1));
                 break;
             case 2:
@@ -224,6 +228,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void setTextView(String str) {
         textView.setText(str);
+    }
+    public void setTextView2(String str) {
+        textView2.setText(str);
+    }
+    public String getTextView2Text() {
+        return (String) this.textView2.getText();
     }
 
 }

@@ -48,6 +48,18 @@ public class Controller {
     public void toTextView(String str) {
         this.display.setTextView(str);
     }
+    public void toTextView2(String str) {
+        this.display.setTextView2(str);
+    }
+    public void printSequencerAndSampleList() {
+        this.toTextView2("");
+        this.toTextView("seqCellListLength: " + Model.instance().getSequencerCellList().size());
+        for (int i = 0; i < Model.instance().getSequencerCellList().size(); i++) {
+            for (int j = 0; j < Model.instance().getSequencerCellList().search(i).getSampleList().size(); j++) {
+                this.toTextView2(this.display.getTextView2Text() + " i: " + i + "j: " + j + " ind: " + Model.instance().getSampleIndexFromSeqList(i, j) + " ^^ ");
+            }
+        }
+    }
 
     // ****************** Getters Setters ******************** //
     public boolean getCurrentSampleHasChanged() {
@@ -61,13 +73,29 @@ public class Controller {
 
     public boolean getCellAndSampleMatchCurrentSample(int i, int j) {
         SequencerCell cell = Model.instance().getSequencerCellList().search(i);
+        this.toTextView("cell found to put color: " + cell.getIndex());
         Sample sample = cell.getSampleList().search(j);
+        if (sample == null) {
+            this.toTextView("sample is null");
+            return false;
+        }
+        else {
+            this.toTextView("sample to add: " + sample.getIndex());
+            return true;
+        }
+        /*
+        this.toTextView("sample to add: " + sample.getIndex());
         if (sample != null) {
-            if (sample.matches(Model.instance().getCurrentSample().getIndex())) {
+            if (sample.getIndex() == Model.instance().getCurrentSample().getIndex()) {
+                this.toTextView("in controllerGetMatch got match i:" + i + " j: " + j);
                 return true;
             }
         }
+        else {
+            //this.toTextView("sample is null i:" + i + " j: " + j);
+        }
         return false;
+        */
     }
 
     public int getCurrentSequencerCellIndex() {

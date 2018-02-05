@@ -160,4 +160,8 @@ public class Model {
             }
         } */
     }
+
+    public int getSampleIndexFromSeqList(int seqIndex, int samIndex) {
+        return this.sequencerCellList.get(seqIndex).getSampleList().get(samIndex).getIndex();
+    }
 }
