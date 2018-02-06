@@ -62,6 +62,17 @@ public class Controller {
     }
 
     // ****************** Getters Setters ******************** //
+    public boolean playPauseHasChanged() {
+        return Model.instance().playPauseHasChanged();
+    }
+    public boolean isInPlayMode() {
+        return Model.instance().isInPlayMode();
+    }
+
+    public boolean isInPauseMode() {
+        return Model.instance().isInPauseMode();
+    }
+
     public boolean isSequencerCellListAddChanged() {
         return Model.instance().getSequencerCellList().isAddChanged();
     }

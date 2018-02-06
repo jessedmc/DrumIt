@@ -65,6 +65,14 @@ public class Model {
         this.pauseMode.stop();
         this.playMode.start();
         this.playMode.setChanged();
+        //this.updateView();
+    }
+
+    public void startPauseMode() {
+        this.pauseMode.start();
+        this.playMode.stop();
+        this.pauseMode.setChanged();
+        //this.updateView();
     }
 
     // toast msg, for testing
@@ -114,12 +122,22 @@ public class Model {
         return currentSequencerCell;
     }
 
-    public PlayMode getPlayMode() {
-        return playMode;
+    public boolean playPauseHasChanged() {
+        if (this.playMode.hasChanged()) {
+            return true;
+        }
+        if (this.pauseMode.hasChanged()) {
+            return true;
+        }
+        return false;
     }
 
-    public PauseMode getPauseMode() {
-        return pauseMode;
+    public boolean isInPlayMode() {
+        return playMode.isInPlayMode();
+    }
+
+    public boolean isInPauseMode() {
+        return pauseMode.isInPauseMode();
     }
 
     public int getCurrentDrumKit() {

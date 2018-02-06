@@ -30,6 +30,7 @@ public class SampleButton extends ToggleButton {
 
     // for testing purposes, should be removed at some point
     MainActivity main;
+
     public SampleButton(Context context, LinearLayout parent, MainActivity main, int index) {
         super(context);
 

@@ -2,6 +2,7 @@ package com.creation.diz.drumit.view;
 
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
@@ -29,16 +30,20 @@ public class MainActivity extends AppCompatActivity {
     TextView textView2;
     LinearLayout linearLayoutSample;
     LinearLayout linearLayoutSequencer;
+    LinearLayout linearLayoutPlayPause;
     ImageView sampleSelector;
     ConstraintLayout rootLayout;
 
     // dynamic controls
     SequencerButton btnSequencer[];
     SampleButton btnSample[];
+    PlayPauseButton btnPlay;
+    PlayPauseButton btnPause;
 
 
     // data
-    MediaPlayer mediaPlayer = new MediaPlayer();
+    SoundPool soundPool = new SoundPool.Builder().build();
+    int[] soundId = new int[10];
 
 
     @Override
@@ -60,9 +65,14 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView)findViewById(R.id.textView);
         textView2 = (TextView)findViewById(R.id.textView2);
         this.linearLayoutSample = (LinearLayout)findViewById(R.id.linearLayoutSample);
-        this.sampleSelector = (ImageView)findViewById(R.id.sampleSelector);
         this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
+        this.sampleSelector = (ImageView)findViewById(R.id.sampleSelector);
+        this.linearLayoutPlayPause = (LinearLayout)findViewById(R.id.linearLayoutPlayPause);
         this.rootLayout = (ConstraintLayout)findViewById(R.id.rootLayout);
+
+        // create play pause buttons
+        this.btnPlay = new PlayPauseButton(this.getApplicationContext(), this.linearLayoutPlayPause, this, 0);
+        this.btnPause = new PlayPauseButton(this.getApplicationContext(), this.linearLayoutPlayPause, this, 1);
 
         // create sequencer buttons for GUI
         this.btnSequencer = new SequencerButton[Controller.instance().getNumOfSequencerCells()];
@@ -79,10 +89,14 @@ public class MainActivity extends AppCompatActivity {
         }
         //this.linearLayoutSample.setTop((int)(0.2 * SampleButton.getScreenHeight()));
 
-        // move the sample linear layout right a little
+        // sample layout padding
         this.linearLayoutSample.setPadding(20, 0, 0, 0);
 
+        // sequencer layout padding
         this.linearLayoutSequencer.setPadding(10, 0, 10, 50);
+
+        // play/pause layout padding
+        this.linearLayoutPlayPause.setPadding(60, 0, 0, 100);
 
      //   this.textView.setText("screenWidth: " + SampleButton.getScreenWidth() + "  screenHeight: " + SampleButton.getScreenHeight() + "  btnSample1.left: " + this.btnSample[1].getLeft());
 
@@ -90,26 +104,37 @@ public class MainActivity extends AppCompatActivity {
         this.sampleSelector.setImageDrawable(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleselectortrans));
         this.sampleSelector.setVisibility(View.INVISIBLE);
 
+        // load samples to sound pool
+        this.soundId[0] = this.soundPool.load(this.getApplicationContext(), R.raw.kick, 0);
+        this.soundId[1] = this.soundPool.load(this.getApplicationContext(), R.raw.snare, 0);
+        this.soundId[2] = this.soundPool.load(this.getApplicationContext(), R.raw.hitom, 0);
+        this.soundId[3] = this.soundPool.load(this.getApplicationContext(), R.raw.lowtom, 0);
+        this.soundId[4] = this.soundPool.load(this.getApplicationContext(), R.raw.closedhihat, 0);
+        this.soundId[5] = this.soundPool.load(this.getApplicationContext(), R.raw.openhihat, 0);
+        this.soundId[6] = this.soundPool.load(this.getApplicationContext(), R.raw.cymbal, 0);
+        this.soundId[7] = this.soundPool.load(this.getApplicationContext(), R.raw.rimshot, 0);
+        this.soundId[8] = this.soundPool.load(this.getApplicationContext(), R.raw.fx1, 0);
+        this.soundId[9] = this.soundPool.load(this.getApplicationContext(), R.raw.fx2, 0);
+
+
 
 
     } // end onCreate()
 
     public void update() {
+
         // current sample changed so modify the sequencer cells to represent only the current sample
         if (Controller.instance().getCurrentSampleHasChanged()) {
             Controller.instance().printSequencerAndSampleList();
             // sequencer cells that have current sample
-            for (int i = 0; i < 16; i++) {   // *** There is an issue here, not right
-               // for (int j = 0; j < Controller.instance().getCellSampleListLength(i); j++) {
-                    if (Controller.instance().getCellAndSampleMatchCurrentSample(i)) {
-                        //this.textView.setText("in main update getCellAndSample i: " + i + "j: " + j);
-                        this.setBtnSequencerBackground(i, Controller.instance().getCurrentSample().getIndex());
-                    }
-                    else {  // set default backgound if sample is not in sequencer cell
-                        this.btnSequencer[i].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.emptycell));
-                    }
-             //   }
-
+            for (int i = 0; i < 16; i++) {   
+                if (Controller.instance().getCellAndSampleMatchCurrentSample(i)) {
+                    //this.textView.setText("in main update getCellAndSample i: " + i + "j: " + j);
+                    this.setBtnSequencerBackground(i, Controller.instance().getCurrentSample().getIndex());
+                }
+                else {  // set default backgound if sample is not in sequencer cell
+                    this.btnSequencer[i].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.emptycell));
+                }
             }
 
             // display sample selector box
@@ -122,13 +147,18 @@ public class MainActivity extends AppCompatActivity {
             top = this.btnSample[sampleIndex].getTop();
             this.textView.setText(this.textView.getText() + "  entered sample update btnSamle.left: " + left + " btnSample.top: " + top);
             ViewGroup.LayoutParams params = this.sampleSelector.getLayoutParams();
-            params.width = 113;
+            params.width = 112;
             params.height = 90;
             this.sampleSelector.setTranslationX(left + 10);
             this.sampleSelector.setTranslationY(20);
             this.sampleSelector.setVisibility(View.VISIBLE);
             this.rootLayout.bringChildToFront(this.sampleSelector);
-        }
+
+            // play sample
+            if (Controller.instance().isInPauseMode()) {
+                this.soundPool.play(this.soundId[Controller.instance().getCurrentSample().getIndex()], 1.0f, 1.0f, 0, 0, 1.0f);
+            }
+        } // end sampleHasChanged
 
         // if there was a click on a sequencer cell
         if (Controller.instance().getSequencerCellListHasChanged() > -1) {
@@ -148,17 +178,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // play / pause modes
-        if (Model.instance().getPlayMode().hasChanged()) {
-            if (Model.instance().getPlayMode().isInPlayMode()) {    // just entered play mode
-                // MediaPlayer plays through SequencerCellList.sample here
+        // play / pause modes have changed
+        if (Controller.instance().playPauseHasChanged()) {
+            if (Controller.instance().isInPlayMode()) {    // in play mode
+                this.btnPlay.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.playon));
+                this.btnPause.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.pauseoff));
+            }
+            else if (Controller.instance().isInPauseMode()) {
+                this.btnPlay.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.playoff));
+                this.btnPause.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.pauseon));
             }
         }
-        if (Model.instance().getPauseMode().hasChanged()) {
-            if (Model.instance().getPauseMode().isInPauseMode()) {
-                // pause mode
-            }
-        }
+
 
 
 

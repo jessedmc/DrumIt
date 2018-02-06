@@ -1,5 +1,7 @@
 package com.creation.diz.drumit.handler;
 
+import com.creation.diz.drumit.events.BtnPauseClickEvent;
+import com.creation.diz.drumit.events.BtnPlayClickEvent;
 import com.creation.diz.drumit.events.BtnSampleClickEvent;
 import com.creation.diz.drumit.events.BtnSequencerClickEvent;
 
@@ -34,6 +36,14 @@ public class Handler {
 
     public void handleEvent(BtnSampleClickEvent event, int index) {
         HandleBtnSampleClickEvent.instance().handle(index);
+    }
+
+    public void handleEvent(BtnPlayClickEvent event) {
+        HandleBtnPlayClickEvent.instance().handle();
+    }
+
+    public void handleEvent(BtnPauseClickEvent event) {
+        HandleBtnPauseClickEvent.instance().handle();
     }
 }
 
