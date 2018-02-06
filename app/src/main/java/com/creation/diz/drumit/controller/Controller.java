@@ -62,6 +62,14 @@ public class Controller {
     }
 
     // ****************** Getters Setters ******************** //
+    public boolean isSequencerCellListAddChanged() {
+        return Model.instance().getSequencerCellList().isAddChanged();
+    }
+
+    public boolean isSequencerCellListRemoveChanged() {
+        return Model.instance().getSequencerCellList().isRemoveChanged();
+    }
+
     public boolean getCurrentSampleHasChanged() {
         return Model.instance().getCurrentSample().hasChanged();
     }
@@ -71,31 +79,18 @@ public class Controller {
         return cell.getSampleList().size();
     }
 
-    public boolean getCellAndSampleMatchCurrentSample(int i, int j) {
+    public boolean getCellAndSampleMatchCurrentSample(int i) {
         SequencerCell cell = Model.instance().getSequencerCellList().search(i);
-        this.toTextView("cell found to put color: " + cell.getIndex());
-        Sample sample = cell.getSampleList().search(j);
-        if (sample == null) {
-            this.toTextView("sample is null");
-            return false;
-        }
-        else {
-            this.toTextView("sample to add: " + sample.getIndex());
-            return true;
-        }
-        /*
-        this.toTextView("sample to add: " + sample.getIndex());
-        if (sample != null) {
+       // this.toTextView("cell found to put color: " + cell.getIndex());
+        Iterator<Sample> iter = cell.getSampleList().iterator();
+        while (iter.hasNext()) {
+            Sample sample = (Sample)iter.next();
             if (sample.getIndex() == Model.instance().getCurrentSample().getIndex()) {
-                this.toTextView("in controllerGetMatch got match i:" + i + " j: " + j);
+                //this.toTextView2("in match(" + i + ") sample.index: " + sample.getIndex());
                 return true;
             }
         }
-        else {
-            //this.toTextView("sample is null i:" + i + " j: " + j);
-        }
         return false;
-        */
     }
 
     public int getCurrentSequencerCellIndex() {
@@ -107,13 +102,8 @@ public class Controller {
     }
 
     public int getSequencerCellListHasChanged() {
-        Iterator<SequencerCell> iter = Model.instance().getSequencerCellList().iterator();
-        while (iter.hasNext()) {
-            SequencerCell cell = (SequencerCell)iter.next();
-            if (cell.hasChanged()) {
-                //Model.instance().toTextView("in controller seqCellHasChanged found index: " + cell.getIndex());
-                return cell.getIndex();
-            }
+        if (Model.instance().getSequencerCellList().hasChanged()) {
+            return Model.instance().getCurrentSequencerCell().getIndex();
         }
         return -1;
     }

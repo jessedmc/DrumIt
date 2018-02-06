@@ -11,7 +11,7 @@ import java.io.Serializable;
  * Created by Diz on 1/27/2018.
  */
 
-public class SequencerCell implements Matchable<Integer>, Serializable, Changeable {
+public class SequencerCell implements Matchable<Integer>, Serializable {
     private boolean changed = false;
     private int index;
     private SampleList sampleList;
@@ -29,26 +29,14 @@ public class SequencerCell implements Matchable<Integer>, Serializable, Changeab
         return false;
     }
 
+
+
     public SampleList getSampleList() {
         return sampleList;
     }
 
     public void setSampleList(SampleList sampleList) {
         this.sampleList = sampleList;
-    }
-
-    @Override
-    public void setChanged() {
-        this.changed = true;
-    }
-
-    @Override
-    public boolean hasChanged() {
-        if (this.changed) {
-            this.changed = false;
-            return true;
-        }
-        return false;
     }
 
     public int getIndex() {

@@ -1,14 +1,17 @@
 package com.creation.diz.drumit.sequencer;
 
+import com.creation.diz.drumit.changeable.Changeable;
 import com.creation.diz.drumit.itemlist.ItemList;
 
 /**
  * Created by Diz on 1/27/2018.
  */
 
-public class SequencerCellList extends ItemList<SequencerCell, Integer> {
+public class SequencerCellList extends ItemList<SequencerCell, Integer> implements Changeable {
     private static final long serialVersionUID = 1L;
     private static SequencerCellList instance;
+    private boolean changed = false, addChanged = false, removeChanged = false;
+    private static final int ADD = 1, REMOVE = 0;
 
     /*
      * Private constructor for singleton pattern
@@ -28,6 +31,44 @@ public class SequencerCellList extends ItemList<SequencerCell, Integer> {
         return instance;
     }
 
+    @Override
+    public void setChanged() {
+        this.changed = true;
+    }
+
+    @Override
+    public boolean hasChanged() {
+        if (this.changed) {
+            this.changed = false;
+            return true;
+        }
+        return false;
+    }
+
+    public void setChanged(int type) {
+        switch (type) {
+            case ADD:
+                this.addChanged = true;
+                this.removeChanged = false;
+                break;
+            case REMOVE:
+                this.removeChanged = true;
+                this.addChanged = false;
+                break;
+            default:
+        }
+
+    }
+
+    // xtension of Changeable, indicates if change was add or remove
+    public boolean isRemoveChanged() {
+        return this.removeChanged;
+    }
+
+    // extension of Changeable, indicates if change was add or remove
+    public boolean isAddChanged() {
+        return this.addChanged;
+    }
     /**
      * Checks whether a member with a given member id exists.
      *

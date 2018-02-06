@@ -100,16 +100,15 @@ public class MainActivity extends AppCompatActivity {
             Controller.instance().printSequencerAndSampleList();
             // sequencer cells that have current sample
             for (int i = 0; i < 16; i++) {   // *** There is an issue here, not right
-                for (int j = 0; j < Controller.instance().getCellSampleListLength(i); j++) {
-                    if (Controller.instance().getCellAndSampleMatchCurrentSample(i, j)) {
+               // for (int j = 0; j < Controller.instance().getCellSampleListLength(i); j++) {
+                    if (Controller.instance().getCellAndSampleMatchCurrentSample(i)) {
                         //this.textView.setText("in main update getCellAndSample i: " + i + "j: " + j);
-                        this.setBtnSequencerBackground(i, j);
-                        break;
+                        this.setBtnSequencerBackground(i, Controller.instance().getCurrentSample().getIndex());
                     }
                     else {  // set default backgound if sample is not in sequencer cell
                         this.btnSequencer[i].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.emptycell));
                     }
-                }
+             //   }
 
             }
 
@@ -139,8 +138,14 @@ public class MainActivity extends AppCompatActivity {
             // get index of current sequencer cell (the one that was clicked on)
             int currentSequencerCellIndex = Controller.instance().getCurrentSequencerCellIndex();
 
-            // clicked sequncer cell change
-            this.setBtnSequencerBackground(currentSequencerCellIndex, currentSampleIndex);
+            // if the change to sequencer cell list was an add
+            if (Controller.instance().isSequencerCellListAddChanged()) {
+                // clicked sequencer cell change
+                this.setBtnSequencerBackground(currentSequencerCellIndex, currentSampleIndex);
+            }
+            else if (Controller.instance().isSequencerCellListRemoveChanged()) {
+                this.btnSequencer[currentSequencerCellIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.emptycell));
+            }
         }
 
         // play / pause modes
