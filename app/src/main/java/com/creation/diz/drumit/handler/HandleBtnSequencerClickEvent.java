@@ -41,7 +41,7 @@ public class HandleBtnSequencerClickEvent {
         if (this.sampleExistsInCell()) {
             this.removeCurrentSampleFromCell();
         }
-        else {
+        else { //
             // add sample to sequencerCell and setChanged()
             this.addSampleToSequencerCell();
         }
