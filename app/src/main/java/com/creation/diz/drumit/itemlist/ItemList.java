@@ -3,6 +3,7 @@ package com.creation.diz.drumit.itemlist;
 import com.creation.diz.drumit.changeable.Changeable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ItemList<T extends Matchable<K>, K> implements Serializable {
     private static final long serialVersionUID = 1L;
-    private List<T> list = new LinkedList<T>();
+    private List<T> list = new ArrayList<T>();
 
 
     /**

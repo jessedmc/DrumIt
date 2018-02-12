@@ -30,9 +30,14 @@ public class Controller {
         return instance;
     }
 
-    // update
+    // update view
     public void updateView() {
         this.display.update();
+    }
+
+    // update player
+    public void updatePlayer(int[] soundIndex) {
+        this.display.updatePlayer(soundIndex);
     }
 
     public void selectBtnSequencer(int index) {

@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout linearLayoutSequencer;
     LinearLayout linearLayoutPlayPause;
     ImageView sampleSelector;
+    ImageView seqCellIndicator;
     ConstraintLayout rootLayout;
 
     // dynamic controls
@@ -58,8 +59,16 @@ public class MainActivity extends AppCompatActivity {
         // set horizontal
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+        // hide navigation bar
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+
         // set display in controller
         Controller.instance().setDisplay(this);
+
 
         // identify xml controls, controls from design view
         textView = (TextView)findViewById(R.id.textView);
@@ -67,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         this.linearLayoutSample = (LinearLayout)findViewById(R.id.linearLayoutSample);
         this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
         this.sampleSelector = (ImageView)findViewById(R.id.sampleSelector);
+        this.seqCellIndicator = (ImageView)findViewById(R.id.seqCellIndicator);
         this.linearLayoutPlayPause = (LinearLayout)findViewById(R.id.linearLayoutPlayPause);
         this.rootLayout = (ConstraintLayout)findViewById(R.id.rootLayout);
 
@@ -88,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
             //this.textView.setText("btnSample[i] got to i = " + i);
         }
         //this.linearLayoutSample.setTop((int)(0.2 * SampleButton.getScreenHeight()));
+
+        // sequencer cell indicator layout
+        this.seqCellIndicator.setPadding(30, 0, 0, 20);
+        this.seqCellIndicator.getLayoutParams().height = 30;
+        this.seqCellIndicator.getLayoutParams().width = 50;
 
         // sample layout padding
         this.linearLayoutSample.setPadding(20, 0, 0, 0);
@@ -122,12 +137,19 @@ public class MainActivity extends AppCompatActivity {
     } // end onCreate()
 
     public void update() {
+        // hide navigation bar
+        /*
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+        */
 
         // current sample changed so modify the sequencer cells to represent only the current sample
         if (Controller.instance().getCurrentSampleHasChanged()) {
             Controller.instance().printSequencerAndSampleList();
             // sequencer cells that have current sample
-            for (int i = 0; i < 16; i++) {   
+            for (int i = 0; i < 16; i++) {
                 if (Controller.instance().getCellAndSampleMatchCurrentSample(i)) {
                     //this.textView.setText("in main update getCellAndSample i: " + i + "j: " + j);
                     this.setBtnSequencerBackground(i, Controller.instance().getCurrentSample().getIndex());
@@ -191,38 +213,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-            /*
-            // play sound if in pause mode
-            if (Model.instance().getPauseMode().isInPauseMode()) {  // change to controller not model
-                this.textView.setText(this.textView.getText() + " in the play part");
-                this.mediaPlayer = MediaPlayer.create(this.getApplicationContext(), R.raw.fx2);
-                try {
-                    //this.mediaPlayer.setDataSource(this.getApplicationContext(), Model.instance().getCurrentSample().getUri());
-                    //this.mediaPlayer.setDataSource(this.getApplicationContext(), Model.instance().getCurrentSample().getUri());
-                    //this.mediaPlayer.prepare();
-                    this.mediaPlayer.setVolume(50, 50);
-                    this.mediaPlayer.start();
-                    this.mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            mp.stop();
-                            mp.release();
-                        }
-                    });
-                  
-
-                }
-                catch (Exception err) {
-                    this.textView.setText("error on pause mode sample play");
-                    err.printStackTrace();
-                }
-                this.mediaPlayer.release();
-                */
-
-
     }// end update
+
+    public void updatePlayer(int[] soundIndex) {
+        if (soundIndex.length > 0) {
+            this.soundPool.play(soundIndex[0], 1.0f, 1.0f, 0, 0, 1.0f);
+        }
+    }
 
     public void setBtnSequencerBackground(int btnSequencerIndex, int sampleIndex) {
         switch (sampleIndex) {

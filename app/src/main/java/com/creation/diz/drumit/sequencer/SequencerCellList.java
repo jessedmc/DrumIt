@@ -93,5 +93,7 @@ public class SequencerCellList extends ItemList<SequencerCell, Integer> implemen
     public boolean insertSequencerCell(SequencerCell sequencerCell) {
         return super.add(sequencerCell);
     }
+
+
 }
 

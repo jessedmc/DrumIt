@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.creation.diz.drumit.controller.Controller;
 import com.creation.diz.drumit.modes.PauseMode;
 import com.creation.diz.drumit.modes.PlayMode;
+import com.creation.diz.drumit.player.PlaybackTimer;
 import com.creation.diz.drumit.samples.Sample;
 import com.creation.diz.drumit.samples.SampleList;
 import com.creation.diz.drumit.sequencer.SequencerCell;
@@ -21,6 +22,7 @@ public class Model {
     public final int NUM_OF_CELLS = 16, NUM_OF_SAMPLES = 10;
     private int selectedSequencerCell = 0;
     private int currentDrumKit = 0;
+    private int[] playbackMessage;
     private SequencerCellList sequencerCellList = SequencerCellList.instance();
     private SampleList sampleList;
     private Sample currentSample;
@@ -46,6 +48,8 @@ public class Model {
         // set to pause mode
         this.pauseMode.start();
 
+
+
     }
 
     // singleton method
@@ -56,7 +60,12 @@ public class Model {
         return instance;
     }
 
-    // update
+    // update player
+    public void updatePlayer() {
+        Controller.instance().updatePlayer(playbackMessage);
+    }
+
+    // update view
     public void updateView() {
         Controller.instance().updateView();
     }
@@ -65,14 +74,15 @@ public class Model {
         this.pauseMode.stop();
         this.playMode.start();
         this.playMode.setChanged();
-        //this.updateView();
+        this.updateView();
+        PlaybackTimer.instance().play();
     }
 
     public void startPauseMode() {
         this.pauseMode.start();
         this.playMode.stop();
         this.pauseMode.setChanged();
-        //this.updateView();
+        this.updateView();
     }
 
     // toast msg, for testing
@@ -181,5 +191,13 @@ public class Model {
 
     public int getSampleIndexFromSeqList(int seqIndex, int samIndex) {
         return this.sequencerCellList.get(seqIndex).getSampleList().get(samIndex).getIndex();
+    }
+
+    public int[] getPlaybackMessage() {
+        return playbackMessage;
+    }
+
+    public void setPlaybackMessage(int[] playbackMessage) {
+        this.playbackMessage = playbackMessage;
     }
 }
