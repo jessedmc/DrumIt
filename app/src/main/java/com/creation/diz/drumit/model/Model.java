@@ -83,6 +83,7 @@ public class Model {
         this.playMode.stop();
         this.pauseMode.setChanged();
         this.updateView();
+        //PlaybackTimer.instance().stop();
     }
 
     // toast msg, for testing

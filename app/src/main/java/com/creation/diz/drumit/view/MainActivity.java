@@ -43,8 +43,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     // data
-    SoundPool soundPool = new SoundPool.Builder().build();
+    SoundPool soundPool = new SoundPool.Builder().setMaxStreams(10).build();
     int[] soundId = new int[10];
+
+    // sample order
+    /*
+    kick
+    snare
+    hitom
+    lowtom
+    closedhihat
+    openhihat
+    cymbal
+    rimshot
+    fx1
+    fx2
+     */
 
 
     @Override
@@ -62,12 +76,15 @@ public class MainActivity extends AppCompatActivity {
         // hide navigation bar
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE;
         decorView.setSystemUiVisibility(uiOptions);
 
 
         // set display in controller
         Controller.instance().setDisplay(this);
+
+        // LayoutMananger initialize
+        LayoutManager.instance().initialize(this);
 
 
         // identify xml controls, controls from design view
@@ -119,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         this.sampleSelector.setImageDrawable(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleselectortrans));
         this.sampleSelector.setVisibility(View.INVISIBLE);
 
-        // load samples to sound pool
+        // load samples to soundpool
         this.soundId[0] = this.soundPool.load(this.getApplicationContext(), R.raw.kick, 0);
         this.soundId[1] = this.soundPool.load(this.getApplicationContext(), R.raw.snare, 0);
         this.soundId[2] = this.soundPool.load(this.getApplicationContext(), R.raw.hitom, 0);
@@ -131,20 +148,14 @@ public class MainActivity extends AppCompatActivity {
         this.soundId[8] = this.soundPool.load(this.getApplicationContext(), R.raw.fx1, 0);
         this.soundId[9] = this.soundPool.load(this.getApplicationContext(), R.raw.fx2, 0);
 
-
-
+        // KEEP LAST
+        // pick a default current sample
+        Controller.instance().setCurrentSampleDefault();
+        this.update();
 
     } // end onCreate()
 
     public void update() {
-        // hide navigation bar
-        /*
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-        */
-
         // current sample changed so modify the sequencer cells to represent only the current sample
         if (Controller.instance().getCurrentSampleHasChanged()) {
             Controller.instance().printSequencerAndSampleList();
@@ -216,8 +227,13 @@ public class MainActivity extends AppCompatActivity {
     }// end update
 
     public void updatePlayer(int[] soundIndex) {
-        if (soundIndex.length > 0) {
-            this.soundPool.play(soundIndex[0], 1.0f, 1.0f, 0, 0, 1.0f);
+        if (soundIndex.length == 1) {
+            this.soundPool.play(soundIndex[0] + 1, 1.0f, 1.0f, 0, 0, 1.0f);
+        }
+        else if (soundIndex.length > 1) {
+            for (int i = 0; i < soundIndex.length; i++) {
+                this.soundPool.play(soundIndex[i] + 1, 1.0f, 1.0f, 0, 0, 1.0f);
+            }
         }
     }
 

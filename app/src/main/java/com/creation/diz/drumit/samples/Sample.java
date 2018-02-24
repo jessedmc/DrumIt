@@ -37,12 +37,12 @@ public class Sample implements Matchable<Integer>, Serializable, Changeable {
         Sample.nameList = new String[Sample.numOfSamples];
         Sample.nameList[0] = "kick";
         Sample.nameList[1] = "snare";
-        Sample.nameList[2] = "lowtom";
-        Sample.nameList[3] = "hitom";
-        Sample.nameList[4] = "rimshot";
-        Sample.nameList[5] = "closedhihat";
-        Sample.nameList[6] = "openhihat";
-        Sample.nameList[7] = "cymbal";
+        Sample.nameList[2] = "hitom";
+        Sample.nameList[3] = "lowtom";
+        Sample.nameList[4] = "closedhihat";
+        Sample.nameList[5] = "openhihat";
+        Sample.nameList[6] = "cymbal";
+        Sample.nameList[7] = "rimshotl";
         Sample.nameList[8] = "fx1";
         Sample.nameList[9] = "fx2";
 

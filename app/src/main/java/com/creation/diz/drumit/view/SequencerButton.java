@@ -3,6 +3,8 @@ package com.creation.diz.drumit.view;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.ToggleButton;
@@ -40,10 +42,30 @@ public class SequencerButton extends ToggleButton {
 
 
         // -- add a space after the button unless its the last button
-        Space space = new Space(this.getContext());
-        space.setMinimumWidth(10);
-        space.setMinimumHeight(20);
-        parent.addView(space);
+        if ((index == 3) || (index == 7) || (index == 11)) {
+            // space
+            Space space = new Space(this.getContext());
+            space.setMinimumWidth(5);
+            space.setMinimumHeight(20);
+            parent.addView(space);
+
+            // separator
+            ImageView imgSeparator = new ImageView(this.getContext());
+            imgSeparator.setImageDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.separator));
+            parent.addView(imgSeparator);
+
+            // space
+            Space space2 = new Space(this.getContext());
+            space2.setMinimumWidth(5);
+            space2.setMinimumHeight(20);
+            parent.addView(space2);
+        }
+        else {
+            Space space = new Space(this.getContext());
+            space.setMinimumWidth(10);
+            space.setMinimumHeight(20);
+            parent.addView(space);
+        }
 
         // -- background image
         //main.setTextView("this.index: " + this.index);

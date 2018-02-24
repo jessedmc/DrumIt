@@ -67,6 +67,9 @@ public class Controller {
     }
 
     // ****************** Getters Setters ******************** //
+    public void setCurrentSampleDefault() {
+        Model.instance().setCurrentSample(0);
+    }
     public boolean playPauseHasChanged() {
         return Model.instance().playPauseHasChanged();
     }

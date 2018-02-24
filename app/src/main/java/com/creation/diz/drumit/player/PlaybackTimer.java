@@ -31,6 +31,10 @@ public class PlaybackTimer implements Runnable{
         new Thread(this).start();
     }
 
+    public void stop() {
+
+    }
+
     @Override
     public void run() {
         int message = -1;
@@ -49,6 +53,7 @@ public class PlaybackTimer implements Runnable{
             else if (sampleListLength == 1) {
                 soundList = new int[1];
                 soundList[0] = sampleList.get(0).getIndex();
+                //Model.instance().toTextView("samleList[0].index: " + sampleList.get(0).getIndex());
             }
             else if (sampleListLength > 1) {
                 soundList = new int[sampleListLength];
@@ -59,7 +64,7 @@ public class PlaybackTimer implements Runnable{
             Model.instance().setPlaybackMessage(soundList);
             Model.instance().updatePlayer();
             try {
-                Thread.sleep(500);
+                Thread.sleep(150);
             } catch (Exception err) {
                 err.printStackTrace();
             }
