@@ -38,13 +38,14 @@ public class HandleBtnSequencerClickEvent {
         this.setCurrentSequencerCell(index);
 
         // if the sample selected already exists in the cell, remove the sample
-        if (this.sampleExistsInCell()) {
+        if (this.sampleExistsInCell()) {//
             this.removeCurrentSampleFromCell();
         }
         else { //
             // add sample to sequencerCell and setChanged()
             this.addSampleToSequencerCell();
         }
+
         Model.instance().updateView();
 
     }
@@ -56,6 +57,8 @@ public class HandleBtnSequencerClickEvent {
     public void addSampleToSequencerCell() {
         SequencerCell cell = Model.instance().getCurrentSequencerCell();
         cell.getSampleList().add(Model.instance().getCurrentSample());
+        // add current sample index to samplesUsed in Model
+        Model.instance().addCurrentSampleToUsed();
         Model.instance().getSequencerCellList().setChanged();
         Model.instance().getSequencerCellList().setChanged(1);
     }
@@ -73,6 +76,8 @@ public class HandleBtnSequencerClickEvent {
 
     public void removeCurrentSampleFromCell() {
         Model.instance().getCurrentSequencerCell().getSampleList().remove(Model.instance().getCurrentSample());
+        // remove current sample from samplesUsed in Model
+        Model.instance().removeCurrentSampleFromUsed();
         Model.instance().getSequencerCellList().setChanged();
         Model.instance().getSequencerCellList().setChanged(0);
     }

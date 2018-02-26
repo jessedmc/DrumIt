@@ -148,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
         this.soundId[8] = this.soundPool.load(this.getApplicationContext(), R.raw.fx1, 0);
         this.soundId[9] = this.soundPool.load(this.getApplicationContext(), R.raw.fx2, 0);
 
+        // set testing textviews to blank
+        this.textView.setText("");
+        this.textView2.setText("");
+
+
         // KEEP LAST
         // pick a default current sample
         Controller.instance().setCurrentSampleDefault();
@@ -158,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     public void update() {
         // current sample changed so modify the sequencer cells to represent only the current sample
         if (Controller.instance().getCurrentSampleHasChanged()) {
-            Controller.instance().printSequencerAndSampleList();
+            //Controller.instance().printSequencerAndSampleList();
             // sequencer cells that have current sample
             for (int i = 0; i < 16; i++) {
                 if (Controller.instance().getCellAndSampleMatchCurrentSample(i)) {
@@ -178,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
             // layout
             left = this.btnSample[sampleIndex].getLeft();
             top = this.btnSample[sampleIndex].getTop();
-            this.textView.setText(this.textView.getText() + "  entered sample update btnSamle.left: " + left + " btnSample.top: " + top);
+           // this.textView.setText(this.textView.getText() + "  entered sample update btnSamle.left: " + left + " btnSample.top: " + top);
             ViewGroup.LayoutParams params = this.sampleSelector.getLayoutParams();
             params.width = 112;
             params.height = 90;
@@ -209,6 +214,21 @@ public class MainActivity extends AppCompatActivity {
             else if (Controller.instance().isSequencerCellListRemoveChanged()) {
                 this.btnSequencer[currentSequencerCellIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.emptycell));
             }
+
+            // check the samples currently being used in the sequencer and change btnSample background to used
+            if (Controller.instance().getSamplesUsedHasChanged()) {
+                //Controller.instance().printSamplesUsed();
+                int currentSample = Controller.instance().getCurrentSample().getIndex();
+                for (int i = 0; i < btnSample.length; i++) {
+                    if (Controller.instance().isSampleUsed(i)) {
+                        this.setBtnSampleBackgroundAsUsed(i);
+                    }
+                    else {
+                        this.setBtnSampleBackground(i);
+                    }
+                }
+            }
+
         }
 
         // play / pause modes have changed
@@ -237,13 +257,87 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void setBtnSampleBackgroundAsUsed(int sampleIndex) {
+        switch (sampleIndex) {
+            case 0:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused0));
+                break;
+            case 1:
+                //this.textView.setText("in main setBtnSeqBack case 1");
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused1));
+                break;
+            case 2:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused2));
+                break;
+            case 3:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused3));
+                break;
+            case 4:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused4));
+                break;
+            case 5:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused5));
+                break;
+            case 6:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused6));
+                break;
+            case 7:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused7));
+                break;
+            case 8:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused8));
+                break;
+            case 9:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleused9));
+                break;
+            default:
+        }
+    }
+
+    public void setBtnSampleBackground(int sampleIndex) {
+        switch (sampleIndex) {
+            case 0:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample0));
+                break;
+            case 1:
+                //this.textView.setText("in main setBtnSeqBack case 1");
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample1));
+                break;
+            case 2:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample2));
+                break;
+            case 3:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample3));
+                break;
+            case 4:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample4));
+                break;
+            case 5:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample5));
+                break;
+            case 6:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample6));
+                break;
+            case 7:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample7));
+                break;
+            case 8:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample8));
+                break;
+            case 9:
+                this.btnSample[sampleIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sample9));
+                break;
+            default:
+        }
+    }
+
     public void setBtnSequencerBackground(int btnSequencerIndex, int sampleIndex) {
         switch (sampleIndex) {
             case 0:
                 this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell0));
                 break;
             case 1:
-                this.textView.setText("in main setBtnSeqBack case 1");
+                //this.textView.setText("in main setBtnSeqBack case 1");
                 this.btnSequencer[btnSequencerIndex].setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.cell1));
                 break;
             case 2:

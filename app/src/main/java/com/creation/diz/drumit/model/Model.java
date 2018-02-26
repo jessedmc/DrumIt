@@ -5,12 +5,15 @@ import android.widget.Toast;
 import com.creation.diz.drumit.controller.Controller;
 import com.creation.diz.drumit.modes.PauseMode;
 import com.creation.diz.drumit.modes.PlayMode;
+import com.creation.diz.drumit.player.Bpm;
 import com.creation.diz.drumit.player.PlaybackTimer;
 import com.creation.diz.drumit.samples.Sample;
 import com.creation.diz.drumit.samples.SampleList;
+import com.creation.diz.drumit.samples.SamplesUsed;
 import com.creation.diz.drumit.sequencer.SequencerCell;
 import com.creation.diz.drumit.sequencer.SequencerCellList;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -23,12 +26,14 @@ public class Model {
     private int selectedSequencerCell = 0;
     private int currentDrumKit = 0;
     private int[] playbackMessage;
+    private SamplesUsed samplesUsed = SamplesUsed.instance();
     private SequencerCellList sequencerCellList = SequencerCellList.instance();
     private SampleList sampleList;
     private Sample currentSample;
     private SequencerCell currentSequencerCell;
     private PlayMode playMode = PlayMode.instance();
     private PauseMode pauseMode = PauseMode.instance();
+    private Bpm bpm = Bpm.instance();
 
     // singleton constructor
     private Model() {
@@ -47,9 +52,6 @@ public class Model {
 
         // set to pause mode
         this.pauseMode.start();
-
-
-
     }
 
     // singleton method
@@ -70,6 +72,14 @@ public class Model {
         Controller.instance().updateView();
     }
 
+    public void addCurrentSampleToUsed() {
+        samplesUsed.addCurrentSampleToUsed();
+    }
+
+    public void removeCurrentSampleFromUsed() {
+        samplesUsed.removeCurrentSampleFromUsed();
+    }
+
     public void startPlayMode() {
         this.pauseMode.stop();
         this.playMode.start();
@@ -86,6 +96,7 @@ public class Model {
         //PlaybackTimer.instance().stop();
     }
 
+
     // toast msg, for testing
     public void makeToast(String str) {
         Toast toast = Toast.makeText(Controller.instance().getContext(), str, Toast.LENGTH_LONG);
@@ -100,7 +111,7 @@ public class Model {
         Iterator<Sample> iter = this.sampleList.iterator();
         while (iter.hasNext()) {
             Sample sample = (Sample)iter.next();
-            Model.instance().toTextView("sample.index: " + sample.getIndex() + " sample: " + sample.toString() + " paramIndex: " + index);
+            // Model.instance().toTextView("sample.index: " + sample.getIndex() + " sample: " + sample.toString() + " paramIndex: " + index);
             if (sample.getIndex() == index) {
                 this.currentSample = sample;
                 break;
@@ -111,7 +122,7 @@ public class Model {
             //Model.instance().toTextView("current sample is null");
         }
         else {
-            Model.instance().toTextView("current sample: " + this.currentSample.getIndex());
+           // Model.instance().toTextView("current sample: " + this.currentSample.getIndex());
             Model.instance().getCurrentSample().setChanged();
             Model.instance().updateView();
         }
@@ -200,5 +211,13 @@ public class Model {
 
     public void setPlaybackMessage(int[] playbackMessage) {
         this.playbackMessage = playbackMessage;
+    }
+
+    public Bpm getBpm() {
+        return bpm;
+    }
+
+    public SamplesUsed getSamplesUsed() {
+        return samplesUsed;
     }
 }

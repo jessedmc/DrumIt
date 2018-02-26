@@ -11,8 +11,9 @@ import com.creation.diz.drumit.sequencer.SequencerCellList;
 public class PlaybackTimer implements Runnable{
     private static PlaybackTimer instance;
     private final int SEQ_CELL_MAX = 15;
-    private int interval = 0, bpm = 0, seqCellIndex;
+    private int interval = 0, bpm = 0, seqCellIndex, stepTime = 125;
     private int[] soundList;
+
 
 
     private PlaybackTimer() {
@@ -43,6 +44,10 @@ public class PlaybackTimer implements Runnable{
 
         // iter here
         while (Model.instance().isInPlayMode()) {
+            if (Model.instance().getBpm().hasChanged()) {
+                this.stepTime = Model.instance().getBpm().getStepTime();
+
+            }
             this.seqCellIndex++;
             SampleList sampleList = seqCellList.get(this.seqCellIndex).getSampleList();
             int sampleListLength = sampleList.size();
@@ -64,7 +69,7 @@ public class PlaybackTimer implements Runnable{
             Model.instance().setPlaybackMessage(soundList);
             Model.instance().updatePlayer();
             try {
-                Thread.sleep(150);
+                Thread.sleep(stepTime);
             } catch (Exception err) {
                 err.printStackTrace();
             }

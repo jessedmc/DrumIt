@@ -38,7 +38,7 @@ public class HandleBtnSampleClickEvent {
 
     // search through sampleList and set currentSample
     public void setCurrentSampleInGui(int index) {
-        Model.instance().toTextView("got to setCurrentSampleInGui() sampleList len: " + Model.instance().getSampleList().size() + "sampleList[0].index: " + Model.instance().getSampleList().get(0).getIndex() + " index param: " + index);
+        //Model.instance().toTextView("got to setCurrentSampleInGui() sampleList len: " + Model.instance().getSampleList().size() + "sampleList[0].index: " + Model.instance().getSampleList().get(0).getIndex() + " index param: " + index);
         Model.instance().setCurrentSample(index);
     }
 

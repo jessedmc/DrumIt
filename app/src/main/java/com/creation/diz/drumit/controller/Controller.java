@@ -65,8 +65,32 @@ public class Controller {
             }
         }
     }
+    public void printSamplesUsed() {
+        this.toTextView2("samples used: ");
+        for (int i = 0; i < Model.instance().getSamplesUsed().getSamples().size(); i++) {
+            this.toTextView2(this.display.getTextView2Text() + " " +  Model.instance().getSamplesUsed().getSamples().get(i));
+        }
+
+    }
 
     // ****************** Getters Setters ******************** //
+    public boolean isSampleUsed(int index) {
+        //this.toTextView2(this.display.getTextView2Text() + " seqCell index: ");
+        for (int i = 0; i < Model.instance().getSamplesUsed().getSamples().size(); i++) {
+            if (Model.instance().getSamplesUsed().getSamples().get(i) == index) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean getSamplesUsedHasChanged() {
+        if (Model.instance().getSamplesUsed().hasChanged()) {
+            return true;
+        }
+        return false;
+    }
+
     public void setCurrentSampleDefault() {
         Model.instance().setCurrentSample(0);
     }

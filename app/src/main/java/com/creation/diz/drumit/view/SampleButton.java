@@ -64,7 +64,7 @@ public class SampleButton extends ToggleButton {
         parent.addView(space);
 
         // -- background image
-        main.setTextView("this.index: " + this.index);
+        //main.setTextView("this.index: " + this.index);
         if (this.index == 0)  this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.sample0));
         if (this.index == 1)  this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.sample1));
         if (this.index == 2)  this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.sample2));
@@ -79,7 +79,7 @@ public class SampleButton extends ToggleButton {
         // on click
         this.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Model.instance().toTextView("sample click");
+               //Model.instance().toTextView("sample click");
                 Handler.instance().handleEvent(BtnSampleClickEvent.instance(), ((SampleButton)view).index);
             }
         });
