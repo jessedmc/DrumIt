@@ -33,7 +33,9 @@ public class HandleBtnPauseClickEvent {
     }
 
     public void startPauseMode() {
-        Model.instance().startPauseMode();
-        Model.instance().updateView();
+        if (Model.instance().getCurrentSample() != null) {
+            Model.instance().startPauseMode();
+            Model.instance().updateView();
+        }
     }
 }

@@ -138,6 +138,7 @@ public class Model {
 
     public void setCurrentSample(Sample sample) {
         this.currentSample = currentSample;
+        //this.currentSample.setChanged();
     }
 
     public SequencerCell getCurrentSequencerCell() {

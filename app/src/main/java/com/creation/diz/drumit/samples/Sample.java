@@ -42,7 +42,7 @@ public class Sample implements Matchable<Integer>, Serializable, Changeable {
         Sample.nameList[4] = "closedhihat";
         Sample.nameList[5] = "openhihat";
         Sample.nameList[6] = "cymbal";
-        Sample.nameList[7] = "rimshotl";
+        Sample.nameList[7] = "rimshot";
         Sample.nameList[8] = "fx1";
         Sample.nameList[9] = "fx2";
 
@@ -66,6 +66,10 @@ public class Sample implements Matchable<Integer>, Serializable, Changeable {
             return true;
         }
         return false;
+    }
+
+    public String getSampleName() {
+        return Sample.nameList[this.index];
     }
 
     // Matchable

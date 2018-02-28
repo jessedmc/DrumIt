@@ -33,21 +33,21 @@ public class HandleBtnSequencerClickEvent {
     }
 
     public void handle(int index) {
-        //Model.instance().toTextView("in handle seq click index: " + index);
-        // set current sequencerCell in Model
-        this.setCurrentSequencerCell(index);
+        if (Model.instance().getCurrentSample() != null) {
+            //Model.instance().toTextView("in handle seq click index: " + index);
+            // set current sequencerCell in Model
+            this.setCurrentSequencerCell(index);
 
-        // if the sample selected already exists in the cell, remove the sample
-        if (this.sampleExistsInCell()) {//
-            this.removeCurrentSampleFromCell();
+            // if the sample selected already exists in the cell, remove the sample
+            if (this.sampleExistsInCell()) {//
+                this.removeCurrentSampleFromCell();
+            } else { //
+                // add sample to sequencerCell and setChanged()
+                this.addSampleToSequencerCell();
+            }
+
+            Model.instance().updateView();
         }
-        else { //
-            // add sample to sequencerCell and setChanged()
-            this.addSampleToSequencerCell();
-        }
-
-        Model.instance().updateView();
-
     }
 
     public void setCurrentSequencerCell(int index) {

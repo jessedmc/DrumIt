@@ -33,9 +33,11 @@ public class HandleBtnPlayClickEvent {
     }
 
     public void startPlayMode() {
-        if (Model.instance().isInPauseMode()) {
-            Model.instance().startPlayMode();
-            Model.instance().updateView();
+        if (Model.instance().getCurrentSample() != null) {
+            if (Model.instance().isInPauseMode()) {
+                Model.instance().startPlayMode();
+                Model.instance().updateView();
+            }
         }
     }
 }

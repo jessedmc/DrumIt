@@ -74,6 +74,9 @@ public class Controller {
     }
 
     // ****************** Getters Setters ******************** //
+    public String getCurrentSampleName() {
+        return Model.instance().getCurrentSample().getSampleName();
+    }
     public boolean isSampleUsed(int index) {
         //this.toTextView2(this.display.getTextView2Text() + " seqCell index: ");
         for (int i = 0; i < Model.instance().getSamplesUsed().getSamples().size(); i++) {

@@ -25,8 +25,9 @@ import java.util.ResourceBundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    // XML controls
+    // XML controls, made in layout editor
     TextView textView;
+    TextView txtSampleName;
     TextView textView2;
     LinearLayout linearLayoutSample;
     LinearLayout linearLayoutSequencer;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     // data
     SoundPool soundPool = new SoundPool.Builder().setMaxStreams(10).build();
     int[] soundId = new int[10];
+    private static int countUpdate = 0;
 
     // sample order
     /*
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         // identify xml controls, controls from design view
         textView = (TextView)findViewById(R.id.textView);
+        txtSampleName = (TextView)findViewById(R.id.txtSampleName);
         textView2 = (TextView)findViewById(R.id.textView2);
         this.linearLayoutSample = (LinearLayout)findViewById(R.id.linearLayoutSample);
         this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         this.seqCellIndicator.setPadding(30, 0, 0, 20);
         this.seqCellIndicator.getLayoutParams().height = 30;
         this.seqCellIndicator.getLayoutParams().width = 50;
+        this.seqCellIndicator.setVisibility(View.INVISIBLE);
 
         // sample layout padding
         this.linearLayoutSample.setPadding(20, 0, 0, 0);
@@ -152,16 +156,42 @@ public class MainActivity extends AppCompatActivity {
         this.textView.setText("");
         this.textView2.setText("");
 
+        // set txtSampleName to blank
+        this.txtSampleName.setText("");
+
 
         // KEEP LAST
-        // pick a default current sample
-        Controller.instance().setCurrentSampleDefault();
-        this.update();
+        // pick a default current sample, this contains a call to update
+        /*
+        try {
+            Thread.sleep(1000);
+        } catch (Exception err) {
+
+        }
+        Controller.instance().setCurrentSampleDefault();      */
+
 
     } // end onCreate()
 
     public void update() {
+
+        this.countUpdate++;
+        if (this.countUpdate == 1) {
+            this.sampleSelector.setVisibility(View.VISIBLE);
+        }
+
+        // --- start testing stuff
+        /*
+        this.textView.setText("count update: " + this.countUpdate);
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (int i = 0; i < stackTrace.length; i++) {
+            this.textView2.setText(this.textView2.getText() + " " + stackTrace[i].getClassName() + " " + stackTrace[i].getMethodName() + " ");
+        }
+        //this.textView2.setText("last stackTrace class: " + stackTrace[stackTrace.length - 1].getClassName());
         // current sample changed so modify the sequencer cells to represent only the current sample
+        */
+        // --- stop testing stuff
+
         if (Controller.instance().getCurrentSampleHasChanged()) {
             //Controller.instance().printSequencerAndSampleList();
             // sequencer cells that have current sample
@@ -196,6 +226,9 @@ public class MainActivity extends AppCompatActivity {
             if (Controller.instance().isInPauseMode()) {
                 this.soundPool.play(this.soundId[Controller.instance().getCurrentSample().getIndex()], 1.0f, 1.0f, 0, 0, 1.0f);
             }
+
+            // display name of sample
+            this.txtSampleName.setText(Controller.instance().getCurrentSampleName());
         } // end sampleHasChanged
 
         // if there was a click on a sequencer cell
