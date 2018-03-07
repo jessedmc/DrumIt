@@ -31,6 +31,13 @@ public class SequencerCellList extends ItemList<SequencerCell, Integer> implemen
         return instance;
     }
 
+    public void clear() {
+        this.list.clear();
+        this.changed = true;
+        this.addChanged = false;
+        this.removeChanged = false;
+    }
+
     @Override
     public void setChanged() {
         this.changed = true;

@@ -93,7 +93,7 @@ public class Model {
         this.playMode.stop();
         this.pauseMode.setChanged();
         this.updateView();
-        //PlaybackTimer.instance().stop();
+
     }
 
 
@@ -105,6 +105,28 @@ public class Model {
     // for testing
     public void toTextView(String str) {
         Controller.instance().toTextView(str);
+    }
+
+    public void clearSequencer() {
+        if (this.playMode.isInPlayMode()) {
+            this.startPauseMode();
+        }
+        this.samplesUsed.clear();
+        this.sequencerCellList.clear();
+        // make sample list
+        for (int i = 0; i < this.NUM_OF_SAMPLES; i++) {
+            this.sampleList.add(new Sample(i));
+        }
+
+        // make sequencerCell list
+        for (int i = 0; i < this.NUM_OF_CELLS; i++) {
+            this.sequencerCellList.add(new SequencerCell(i));
+        }
+        this.samplesUsed.setChanged();
+        this.currentSample = sampleList.get(0);
+        this.currentSample.setChanged();
+        this.currentSequencerCell = new SequencerCell(-10);
+        this.updateView();
     }
 
     public void setCurrentSample(int index) {

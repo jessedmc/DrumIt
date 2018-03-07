@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ItemList<T extends Matchable<K>, K> implements Serializable {
     private static final long serialVersionUID = 1L;
-    private List<T> list = new ArrayList<T>();
+    protected List<T> list = new ArrayList<T>();
 
 
     /**

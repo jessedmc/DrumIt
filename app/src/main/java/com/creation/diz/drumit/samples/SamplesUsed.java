@@ -78,6 +78,11 @@ public class SamplesUsed implements Changeable {
         }
     }
 
+    public void clear() {
+        this.samples.clear();
+        this.changed = true;
+    }
+
     @Override
     public void setChanged() {
         this.changed = true;

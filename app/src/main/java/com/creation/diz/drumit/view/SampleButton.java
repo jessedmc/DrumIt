@@ -41,27 +41,21 @@ public class SampleButton extends ToggleButton {
         this.index = index;
         this.setSoundEffectsEnabled(false);
 
-        // layout
-        if (screenWidth == 0.0) {
-            screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
-        }
-        if (screenHeight == 0.0) {
-            screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
-        }
-
         // -- add button to parent
         parent.addView(this);//, this.getLayoutParams());
 
         // -- sample button width, height
-        this.setLayoutParams(new LinearLayout.LayoutParams(100, 50));
+        this.setLayoutParams(new LinearLayout.LayoutParams(LayoutManager.SAMPLE_WIDTH, LayoutManager.SAMPLE_HEIGHT));
 
 
 
         // -- add a space after the button unless its the last button
-        Space space = new Space(this.getContext());
-        space.setMinimumWidth(10);
-        space.setMinimumHeight(20);
-        parent.addView(space);
+        if (index < 9) {
+            Space space = new Space(this.getContext());
+            space.setMinimumWidth(LayoutManager.SAMPLE_GAP);
+            space.setMinimumHeight(LayoutManager.SAMPLE_HEIGHT);
+            parent.addView(space);
+        }
 
         // -- background image
         //main.setTextView("this.index: " + this.index);

@@ -1,27 +1,20 @@
 package com.creation.diz.drumit.view;
 
 import android.content.pm.ActivityInfo;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.TextView;
 
 import com.creation.diz.drumit.R;
 import com.creation.diz.drumit.controller.Controller;
 import com.creation.diz.drumit.model.Model;
-import com.creation.diz.drumit.samples.Sample;
-
-import java.util.ResourceBundle;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout linearLayoutSample;
     LinearLayout linearLayoutSequencer;
     LinearLayout linearLayoutPlayPause;
+    LinearLayout linearLayoutUp;
     ImageView sampleSelector;
     ImageView seqCellIndicator;
     ConstraintLayout rootLayout;
@@ -39,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
     // dynamic controls
     SequencerButton btnSequencer[];
     SampleButton btnSample[];
-    PlayPauseButton btnPlay;
-    PlayPauseButton btnPause;
+    PlayButton btnPlay;
+    PlayButton btnPause;
+    PlayButton btnNew;
+    PlayButton btnExport;
 
 
     // data
@@ -85,8 +81,7 @@ public class MainActivity extends AppCompatActivity {
         // set display in controller
         Controller.instance().setDisplay(this);
 
-        // LayoutMananger initialize
-        LayoutManager.instance().initialize(this);
+
 
 
         // identify xml controls, controls from design view
@@ -94,15 +89,22 @@ public class MainActivity extends AppCompatActivity {
         txtSampleName = (TextView)findViewById(R.id.txtSampleName);
         textView2 = (TextView)findViewById(R.id.textView2);
         this.linearLayoutSample = (LinearLayout)findViewById(R.id.linearLayoutSample);
+        this.linearLayoutUp = (LinearLayout)findViewById(R.id.linearLayoutUp);
         this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
         this.sampleSelector = (ImageView)findViewById(R.id.sampleSelector);
         this.seqCellIndicator = (ImageView)findViewById(R.id.seqCellIndicator);
         this.linearLayoutPlayPause = (LinearLayout)findViewById(R.id.linearLayoutPlayPause);
         this.rootLayout = (ConstraintLayout)findViewById(R.id.rootLayout);
 
+        // LayoutMananger initialize
+        LayoutManager.instance().initialize(this);
+
+
         // create play pause buttons
-        this.btnPlay = new PlayPauseButton(this.getApplicationContext(), this.linearLayoutPlayPause, this, 0);
-        this.btnPause = new PlayPauseButton(this.getApplicationContext(), this.linearLayoutPlayPause, this, 1);
+        this.btnPlay = new PlayButton(this.getApplicationContext(), this.linearLayoutPlayPause, 0);
+        this.btnPause = new PlayButton(this.getApplicationContext(), this.linearLayoutPlayPause, 1);
+        this.btnNew = new PlayButton(this.getApplicationContext(), this.linearLayoutPlayPause, 2);
+        this.btnExport = new PlayButton(this.getApplicationContext(), this.linearLayoutPlayPause, 3);
 
         // create sequencer buttons for GUI
         this.btnSequencer = new SequencerButton[Controller.instance().getNumOfSequencerCells()];
@@ -126,13 +128,17 @@ public class MainActivity extends AppCompatActivity {
         this.seqCellIndicator.setVisibility(View.INVISIBLE);
 
         // sample layout padding
-        this.linearLayoutSample.setPadding(20, 0, 0, 0);
+        this.linearLayoutSample.setPadding(LayoutManager.SAMPLE_PADDING_LEFT, 0, 0, LayoutManager.SAMPLE_PADDING_BOTTOM);
 
         // sequencer layout padding
-        this.linearLayoutSequencer.setPadding(10, 0, 10, 50);
+        this.linearLayoutSequencer.setPadding(LayoutManager.SEQ_CELL_PADDING_LEFT, 0, 0, LayoutManager.SEQ_CELL_PADDING_BOTTOM);
 
         // play/pause layout padding
-        this.linearLayoutPlayPause.setPadding(60, 0, 0, 100);
+        this.linearLayoutPlayPause.setPadding(LayoutManager.PLAY_BUTTON_PADDING_LEFT, 0, 0, 100);
+
+        // linear layout up
+        this.linearLayoutUp.setPadding(60, 0, 0, 100);
+
 
      //   this.textView.setText("screenWidth: " + SampleButton.getScreenWidth() + "  screenHeight: " + SampleButton.getScreenHeight() + "  btnSample1.left: " + this.btnSample[1].getLeft());
 
@@ -153,11 +159,14 @@ public class MainActivity extends AppCompatActivity {
         this.soundId[9] = this.soundPool.load(this.getApplicationContext(), R.raw.fx2, 0);
 
         // set testing textviews to blank
-        this.textView.setText("");
+        //this.textView.setText("");
         this.textView2.setText("");
+        //this.textView.setVisibility(View.VISIBLE);
 
         // set txtSampleName to blank
         this.txtSampleName.setText("");
+
+
 
 
         // KEEP LAST
@@ -179,18 +188,6 @@ public class MainActivity extends AppCompatActivity {
         if (this.countUpdate == 1) {
             this.sampleSelector.setVisibility(View.VISIBLE);
         }
-
-        // --- start testing stuff
-        /*
-        this.textView.setText("count update: " + this.countUpdate);
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        for (int i = 0; i < stackTrace.length; i++) {
-            this.textView2.setText(this.textView2.getText() + " " + stackTrace[i].getClassName() + " " + stackTrace[i].getMethodName() + " ");
-        }
-        //this.textView2.setText("last stackTrace class: " + stackTrace[stackTrace.length - 1].getClassName());
-        // current sample changed so modify the sequencer cells to represent only the current sample
-        */
-        // --- stop testing stuff
 
         if (Controller.instance().getCurrentSampleHasChanged()) {
             //Controller.instance().printSequencerAndSampleList();
@@ -232,7 +229,8 @@ public class MainActivity extends AppCompatActivity {
         } // end sampleHasChanged
 
         // if there was a click on a sequencer cell
-        if (Controller.instance().getSequencerCellListHasChanged() > -1) {
+        int seqCellChanged = Controller.instance().getSequencerCellListHasChanged();
+        if (seqCellChanged > -1) {  // -1 is no change
             // get index of current sample so we know which pic to change the cell to
             int currentSampleIndex = Controller.instance().getCurrentSampleIndex();
 
@@ -263,6 +261,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+        else if (seqCellChanged == -10) {       // -10 is new blank sequencer, set samples to regular background (not used)
+            for (int i = 0; i < 10; i++) {
+                this.setBtnSampleBackground(i);
+            }
+        }
 
         // play / pause modes have changed
         if (Controller.instance().playPauseHasChanged()) {
@@ -288,6 +291,14 @@ public class MainActivity extends AppCompatActivity {
                 this.soundPool.play(soundIndex[i] + 1, 1.0f, 1.0f, 0, 0, 1.0f);
             }
         }
+    }
+
+    public void setBtnNewTouchDown() {
+        this.btnNew.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.newon));
+    }
+
+    public void setBtnNewTouchUp() {
+        this.btnNew.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.newoff));
     }
 
     public void setBtnSampleBackgroundAsUsed(int sampleIndex) {

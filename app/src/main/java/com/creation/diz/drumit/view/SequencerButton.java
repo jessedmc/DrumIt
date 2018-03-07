@@ -37,33 +37,33 @@ public class SequencerButton extends ToggleButton {
         parent.addView(this);//, this.getLayoutParams());
 
         // -- button width, height
-        this.setLayoutParams(new LinearLayout.LayoutParams(60, 90));
-
+        this.setLayoutParams(new LinearLayout.LayoutParams(LayoutManager.SEQ_CELL_WIDTH, LayoutManager.SEQ_CELL_HEIGHT));
 
 
         // -- add a space after the button unless its the last button
         if ((index == 3) || (index == 7) || (index == 11)) {
             // space
             Space space = new Space(this.getContext());
-            space.setMinimumWidth(5);
-            space.setMinimumHeight(20);
+            space.setMinimumWidth(LayoutManager.SEQ_CELL_GAP_SEPARATOR);
+            space.setMinimumHeight(LayoutManager.SEQ_CELL_HEIGHT);
             parent.addView(space);
 
             // separator
             ImageView imgSeparator = new ImageView(this.getContext());
             imgSeparator.setImageDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.separator));
+            imgSeparator.setLayoutParams(new LinearLayout.LayoutParams(1, LayoutManager.SEQ_CELL_HEIGHT));
             parent.addView(imgSeparator);
 
             // space
             Space space2 = new Space(this.getContext());
-            space2.setMinimumWidth(5);
-            space2.setMinimumHeight(20);
+            space2.setMinimumWidth(LayoutManager.SEQ_CELL_GAP_SEPARATOR);
+            space2.setMinimumHeight(LayoutManager.SEQ_CELL_HEIGHT);
             parent.addView(space2);
         }
         else {
             Space space = new Space(this.getContext());
-            space.setMinimumWidth(10);
-            space.setMinimumHeight(20);
+            space.setMinimumWidth(LayoutManager.SEQ_CELL_GAP);
+            space.setMinimumHeight(LayoutManager.SEQ_CELL_HEIGHT);
             parent.addView(space);
         }
 
@@ -74,6 +74,7 @@ public class SequencerButton extends ToggleButton {
         // on click
         this.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+
                 Handler.instance().handleEvent(BtnSequencerClickEvent.instance(), ((SequencerButton)view).index);
             }
         });

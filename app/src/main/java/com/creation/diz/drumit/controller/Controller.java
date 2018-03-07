@@ -1,7 +1,9 @@
 package com.creation.diz.drumit.controller;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 
+import com.creation.diz.drumit.R;
 import com.creation.diz.drumit.model.Model;
 import com.creation.diz.drumit.samples.Sample;
 import com.creation.diz.drumit.sequencer.SequencerCell;
@@ -74,6 +76,14 @@ public class Controller {
     }
 
     // ****************** Getters Setters ******************** //
+    public void setBtnNewTouchDown() {
+        this.display.setBtnNewTouchDown();
+    }
+
+    public void setBtnNewTouchUp() {
+        this.display.setBtnNewTouchUp();
+    }
+
     public String getCurrentSampleName() {
         return Model.instance().getCurrentSample().getSampleName();
     }
@@ -149,6 +159,7 @@ public class Controller {
 
     public int getSequencerCellListHasChanged() {
         if (Model.instance().getSequencerCellList().hasChanged()) {
+            //this.display.setTextView("in seq cell list has changed index: " + Model.instance().getCurrentSequencerCell().getIndex());
             return Model.instance().getCurrentSequencerCell().getIndex();
         }
         return -1;
