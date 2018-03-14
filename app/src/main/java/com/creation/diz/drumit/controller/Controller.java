@@ -89,6 +89,14 @@ public class Controller {
         this.display.setBtnNewTouchDown();
     }
 
+    public void setBtnBpmUpTouchDown() {
+        this.display.setBtnBpmUpTouchDown();
+    }
+
+    public void setBtnBpmUpTouchUp() {
+        this.display.setBtnBpmUpTouchUp();
+    }
+
     public void setBtnNewTouchUp() {
         this.display.setBtnNewTouchUp();
     }

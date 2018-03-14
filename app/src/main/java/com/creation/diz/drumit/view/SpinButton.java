@@ -2,6 +2,7 @@ package com.creation.diz.drumit.view;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
@@ -9,7 +10,7 @@ import android.widget.ToggleButton;
 import com.creation.diz.drumit.R;
 import com.creation.diz.drumit.events.BtnBpmDownClickEvent;
 import com.creation.diz.drumit.events.BtnBpmUpClickEvent;
-import com.creation.diz.drumit.events.BtnSequencerClickEvent;
+import com.creation.diz.drumit.events.BtnBpmUpTouchUpEvent;
 import com.creation.diz.drumit.handler.Handler;
 
 /**
@@ -36,13 +37,22 @@ public class SpinButton extends ToggleButton {
         parent.addView(this);//, this.getLayoutParams());
 
         // -- button width, height
-        this.setLayoutParams(new LinearLayout.LayoutParams(40, 40));
+        this.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
 
         if (type == UP) {
             this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.upoff));
-            this.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    Handler.instance().handleEvent(BtnBpmUpClickEvent.instance());
+            this.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Handler.instance().handleEvent(BtnBpmUpClickEvent.instance());
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Handler.instance().handleEvent(BtnBpmUpTouchUpEvent.instance());
+                        break;
+                }
+                return true;
                 }
             });
         }

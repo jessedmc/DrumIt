@@ -318,6 +318,14 @@ public class MainActivity extends AppCompatActivity {
         this.btnNew.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.newon));
     }
 
+    public void setBtnBpmUpTouchDown() {
+        this.btnBpmUp.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.upon));
+    }
+
+    public void setBtnBpmUpTouchUp() {
+        this.btnBpmUp.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.upoff));
+    }
+
     public void setBtnNewTouchUp() {
         this.btnNew.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.newoff));
     }

@@ -1,5 +1,6 @@
 package com.creation.diz.drumit.handler;
 
+import com.creation.diz.drumit.controller.Controller;
 import com.creation.diz.drumit.model.Model;
 
 /**
@@ -28,7 +29,10 @@ public class HandleBtnBpmUpClickEvent {
     }
 
     public void handle() {
-        this.incrementBpm();
+        Controller.instance().setBtnBpmUpTouchDown();
+        if (Model.instance().isInPlayMode()) {
+            this.incrementBpm();
+        }
 
     }
 
