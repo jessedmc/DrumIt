@@ -7,7 +7,7 @@ import com.creation.diz.drumit.changeable.Changeable;
  */
 
 public class Bpm implements Changeable {
-    private boolean changed = false;
+    private boolean playbackChanged = false, viewChanged = false;
     private int bpm = 120, stepTime = 125;
     private static Bpm instance;
 
@@ -26,27 +26,37 @@ public class Bpm implements Changeable {
 
     @Override
     public void setChanged() {
-        this.changed = true;
+        this.playbackChanged = true;
+        this.viewChanged = true;
     }
 
     @Override
     public boolean hasChanged() {
-        if (this.changed) {
-            this.changed = false;
+        return false;
+    }
+
+    public boolean hasPlaybackChanged() {
+        if (this.playbackChanged) {
+            this.playbackChanged = false;
             return true;
         }
         return false;
     }
-/*
-    public boolean hasChangedPlayThread() {
-        if (this.changed) {
+
+    public boolean hasViewChanged() {
+        if (this.viewChanged) {
+            this.viewChanged = false;
             return true;
         }
-    }  */
+        return false;
+    }
 
     public void setBpm(int bpm) {
         this.bpm = bpm;;
-        this.changed = true;
+    }
+
+    public int getBpm() {
+        return this.bpm;
     }
 
     public int getStepTime() {

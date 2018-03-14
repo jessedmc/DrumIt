@@ -44,9 +44,8 @@ public class PlaybackTimer implements Runnable{
 
         // iter here
         while (Model.instance().isInPlayMode()) {
-            if (Model.instance().getBpm().hasChanged()) {
+            if (Model.instance().getBpm().hasPlaybackChanged()) {
                 this.stepTime = Model.instance().getBpm().getStepTime();
-
             }
             this.seqCellIndex++;
             SampleList sampleList = seqCellList.get(this.seqCellIndex).getSampleList();

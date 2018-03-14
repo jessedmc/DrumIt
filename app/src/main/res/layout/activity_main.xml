@@ -89,8 +89,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayoutSequencer"
-        app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"
-        app:layout_constraintStart_toStartOf="parent"></LinearLayout>
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutText"
+        app:layout_constraintLeft_toRightOf="@+id/linearLayoutPlayPause"
+        app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutSequencer"
+        app:layout_constraintLeft_toRightOf="@+id/linearLayoutPlayPause"
+        app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutDown"
+        app:layout_constraintLeft_toRightOf="@+id/linearLayoutPlayPause"
+        app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

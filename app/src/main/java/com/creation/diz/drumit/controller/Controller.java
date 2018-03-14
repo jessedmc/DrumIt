@@ -76,6 +76,15 @@ public class Controller {
     }
 
     // ****************** Getters Setters ******************** //
+
+    public boolean hasBpmViewChanged() {
+        return Model.instance().getBpm().hasViewChanged();
+    }
+
+    public int getBpm() {
+        return Model.instance().getBpm().getBpm();
+    }
+
     public void setBtnNewTouchDown() {
         this.display.setBtnNewTouchDown();
     }

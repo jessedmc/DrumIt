@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout linearLayoutSequencer;
     LinearLayout linearLayoutPlayPause;
     LinearLayout linearLayoutUp;
+    LinearLayout linearLayoutText;
+    LinearLayout linearLayoutDown;
     ImageView sampleSelector;
     ImageView seqCellIndicator;
     ConstraintLayout rootLayout;
@@ -37,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
     PlayButton btnPause;
     PlayButton btnNew;
     PlayButton btnExport;
-
+    SpinButton btnBpmUp;
+    SpinButton btnBpmDown;
+    SpinButton btnPitchUp;
+    SpinButton btnPitchDown;
 
     // data
     SoundPool soundPool = new SoundPool.Builder().setMaxStreams(10).build();
@@ -89,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         txtSampleName = (TextView)findViewById(R.id.txtSampleName);
         textView2 = (TextView)findViewById(R.id.textView2);
         this.linearLayoutSample = (LinearLayout)findViewById(R.id.linearLayoutSample);
+        this.linearLayoutDown = (LinearLayout)findViewById(R.id.linearLayoutDown);
+        this.linearLayoutText = (LinearLayout)findViewById(R.id.linearLayoutText);
         this.linearLayoutUp = (LinearLayout)findViewById(R.id.linearLayoutUp);
         this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
         this.sampleSelector = (ImageView)findViewById(R.id.sampleSelector);
@@ -105,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
         this.btnPause = new PlayButton(this.getApplicationContext(), this.linearLayoutPlayPause, 1);
         this.btnNew = new PlayButton(this.getApplicationContext(), this.linearLayoutPlayPause, 2);
         this.btnExport = new PlayButton(this.getApplicationContext(), this.linearLayoutPlayPause, 3);
+
+        // create spin buttons (up , down)
+        this.btnBpmUp = new SpinButton(this.getApplicationContext(), this.linearLayoutUp, 0, 100); // 100 is up   ,   101 is down
+        this.btnBpmDown = new SpinButton(this.getApplicationContext(), this.linearLayoutDown, 1, 101);
 
         // create sequencer buttons for GUI
         this.btnSequencer = new SequencerButton[Controller.instance().getNumOfSequencerCells()];
@@ -139,12 +150,17 @@ public class MainActivity extends AppCompatActivity {
         // linear layout up
         this.linearLayoutUp.setPadding(60, 0, 0, 100);
 
+        // linear layout down
+        this.linearLayoutDown.setPadding(60, 0, 0, 20);
+
 
      //   this.textView.setText("screenWidth: " + SampleButton.getScreenWidth() + "  screenHeight: " + SampleButton.getScreenHeight() + "  btnSample1.left: " + this.btnSample[1].getLeft());
 
         // sample selector
         this.sampleSelector.setImageDrawable(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.sampleselectortrans));
         this.sampleSelector.setVisibility(View.INVISIBLE);
+        this.sampleSelector.setX(this.linearLayoutSample.getX());
+        this.sampleSelector.setY(this.linearLayoutSample.getY());
 
         // load samples to soundpool
         this.soundId[0] = this.soundPool.load(this.getApplicationContext(), R.raw.kick, 0);
@@ -212,10 +228,10 @@ public class MainActivity extends AppCompatActivity {
             top = this.btnSample[sampleIndex].getTop();
            // this.textView.setText(this.textView.getText() + "  entered sample update btnSamle.left: " + left + " btnSample.top: " + top);
             ViewGroup.LayoutParams params = this.sampleSelector.getLayoutParams();
-            params.width = 112;
-            params.height = 90;
-            this.sampleSelector.setTranslationX(left + 10);
-            this.sampleSelector.setTranslationY(20);
+            params.width = LayoutManager.SAMPLE_WIDTH + 10;
+            params.height = LayoutManager.SAMPLE_HEIGHT + 6;
+            this.sampleSelector.setTranslationX(left + (LayoutManager.SAMPLE_WIDTH / 2));
+            this.sampleSelector.setTranslationY(top - LayoutManager.SAMPLE_HEIGHT);
             this.sampleSelector.setVisibility(View.VISIBLE);
             this.rootLayout.bringChildToFront(this.sampleSelector);
 
@@ -277,6 +293,11 @@ public class MainActivity extends AppCompatActivity {
                 this.btnPlay.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.playoff));
                 this.btnPause.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.pauseon));
             }
+        }
+
+        // bpm text view
+        if (Controller.instance().hasBpmViewChanged()) {
+            this.textView.setText("bpm: " + Controller.instance().getBpm());
         }
 
 

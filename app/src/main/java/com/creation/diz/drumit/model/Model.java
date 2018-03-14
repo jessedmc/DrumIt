@@ -62,6 +62,12 @@ public class Model {
         return instance;
     }
 
+    public void incrementBpm() {
+        this.bpm.setBpm(this.bpm.getBpm() + 5);
+        this.bpm.setChanged();
+        this.updateView();
+    }
+
     // update player
     public void updatePlayer() {
         Controller.instance().updatePlayer(playbackMessage);
