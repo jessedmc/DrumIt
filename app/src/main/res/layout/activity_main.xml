@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayoutText"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutChangingText"
         app:layout_constraintLeft_toRightOf="@+id/linearLayoutPlayPause"
         app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"></LinearLayout>
 
@@ -103,7 +103,7 @@
         app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"></LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutText"
+        android:id="@+id/linearLayoutChangingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         textView2 = (TextView)findViewById(R.id.textView2);
         this.linearLayoutSample = (LinearLayout)findViewById(R.id.linearLayoutSample);
         this.linearLayoutDown = (LinearLayout)findViewById(R.id.linearLayoutDown);
-        this.linearLayoutText = (LinearLayout)findViewById(R.id.linearLayoutText);
+        this.linearLayoutText = (LinearLayout)findViewById(R.id.linearLayoutChangingText);
         this.linearLayoutUp = (LinearLayout)findViewById(R.id.linearLayoutUp);
         this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
         this.sampleSelector = (ImageView)findViewById(R.id.sampleSelector);
@@ -145,13 +145,13 @@ public class MainActivity extends AppCompatActivity {
         this.linearLayoutSequencer.setPadding(LayoutManager.SEQ_CELL_PADDING_LEFT, 0, 0, LayoutManager.SEQ_CELL_PADDING_BOTTOM);
 
         // play/pause layout padding
-        this.linearLayoutPlayPause.setPadding(LayoutManager.PLAY_BUTTON_PADDING_LEFT, 0, 0, 100);
+        this.linearLayoutPlayPause.setPadding(LayoutManager.PLAY_BUTTON_PADDING_LEFT, 0, 0, LayoutManager.PLAY_BUTTON_PADDING_BOTTOM);
 
         // linear layout up
-        this.linearLayoutUp.setPadding(60, 0, 0, 100);
+        this.linearLayoutUp.setPadding(LayoutManager.UP_BUTTON_PADDING_LEFT, 0, 0, LayoutManager.UP_BUTTON_PADDING_BOTTOM);
 
         // linear layout down
-        this.linearLayoutDown.setPadding(60, 0, 0, 20);
+        this.linearLayoutDown.setPadding(LayoutManager.DOWN_BUTTON_PADDING_LEFT, 0, 0, LayoutManager.DOWN_BUTTON_PADDING_BOTTOM);
 
 
      //   this.textView.setText("screenWidth: " + SampleButton.getScreenWidth() + "  screenHeight: " + SampleButton.getScreenHeight() + "  btnSample1.left: " + this.btnSample[1].getLeft());
