@@ -38,7 +38,7 @@ public class SpinButton extends ToggleButton {
         parent.addView(this);//, this.getLayoutParams());
 
         // -- button width, height
-        this.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+        this.setLayoutParams(new LinearLayout.LayoutParams(LayoutManager.UP_BUTTON_WIDTH, LayoutManager.UP_BUTTON_WIDTH));
 
         if (type == UP) {
             this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.upoff));
