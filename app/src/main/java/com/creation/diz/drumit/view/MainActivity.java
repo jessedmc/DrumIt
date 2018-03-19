@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout linearLayoutUp;
     LinearLayout linearLayoutText;
     LinearLayout linearLayoutDown;
+    LinearLayout linearLayoutUpText;
+    LinearLayout linearLayoutChangingText;
     ImageView sampleSelector;
     ImageView seqCellIndicator;
     ConstraintLayout rootLayout;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     SpinButton btnBpmDown;
     SpinButton btnPitchUp;
     SpinButton btnPitchDown;
+    ChangingText bpmChangingText;
+    UpText bpmUpText;
 
     // data
     SoundPool soundPool = new SoundPool.Builder().setMaxStreams(10).build();
@@ -97,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
         this.linearLayoutDown = (LinearLayout)findViewById(R.id.linearLayoutDown);
         this.linearLayoutText = (LinearLayout)findViewById(R.id.linearLayoutChangingText);
         this.linearLayoutUp = (LinearLayout)findViewById(R.id.linearLayoutUp);
+        this.linearLayoutUpText = (LinearLayout)findViewById(R.id.linearLayoutUpText);
+        this.linearLayoutChangingText = (LinearLayout)findViewById(R.id.linearLayoutChangingText);
         this.linearLayoutSequencer = (LinearLayout)findViewById(R.id.linearLayoutSequencer);
         this.sampleSelector = (ImageView)findViewById(R.id.sampleSelector);
         this.seqCellIndicator = (ImageView)findViewById(R.id.seqCellIndicator);
@@ -132,6 +138,13 @@ public class MainActivity extends AppCompatActivity {
         }
         //this.linearLayoutSample.setTop((int)(0.2 * SampleButton.getScreenHeight()));
 
+        // create changing textviews for GUI
+        this.bpmChangingText = new ChangingText(this.getApplicationContext(), 100, this.linearLayoutChangingText);
+
+        // create up textviews for GUI
+        this.bpmUpText = new UpText(this.getApplicationContext(), 100, this.linearLayoutUpText);
+
+
         // sequencer cell indicator layout
         this.seqCellIndicator.setPadding(30, 0, 0, 20);
         this.seqCellIndicator.getLayoutParams().height = 30;
@@ -152,6 +165,12 @@ public class MainActivity extends AppCompatActivity {
 
         // linear layout down
         this.linearLayoutDown.setPadding(LayoutManager.DOWN_BUTTON_PADDING_LEFT, 0, 0, LayoutManager.DOWN_BUTTON_PADDING_BOTTOM);
+
+        // linear layout changing text
+        this.linearLayoutChangingText.setPadding(LayoutManager.UP_BUTTON_PADDING_LEFT, 0, 0, LayoutManager.CHANGING_TEXT_PADDING_BOTTOM);
+
+        // linear layout up text
+        this.linearLayoutUpText.setPadding(LayoutManager.UP_BUTTON_PADDING_LEFT, 0, 0, LayoutManager.UP_TEXT_PADDING_BOTTOM);
 
 
      //   this.textView.setText("screenWidth: " + SampleButton.getScreenWidth() + "  screenHeight: " + SampleButton.getScreenHeight() + "  btnSample1.left: " + this.btnSample[1].getLeft());
@@ -297,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
         // bpm text view
         if (Controller.instance().hasBpmViewChanged()) {
-            this.textView.setText("bpm: " + Controller.instance().getBpm());
+            this.bpmChangingText.setText(String.valueOf(Controller.instance().getBpm()));
         }
 
 
@@ -324,6 +343,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void setBtnBpmUpTouchUp() {
         this.btnBpmUp.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.upoff));
+    }
+
+    public void setBtnBpmDownTouchDown() {
+        this.btnBpmDown.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.downon));
+    }
+
+    public void setBtnBpmDownTouchUp() {
+        this.btnBpmDown.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.downoff));
     }
 
     public void setBtnNewTouchUp() {

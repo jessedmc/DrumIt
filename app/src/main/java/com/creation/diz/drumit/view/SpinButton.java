@@ -9,6 +9,7 @@ import android.widget.ToggleButton;
 
 import com.creation.diz.drumit.R;
 import com.creation.diz.drumit.events.BtnBpmDownClickEvent;
+import com.creation.diz.drumit.events.BtnBpmDownTouchUpEvent;
 import com.creation.diz.drumit.events.BtnBpmUpClickEvent;
 import com.creation.diz.drumit.events.BtnBpmUpTouchUpEvent;
 import com.creation.diz.drumit.handler.Handler;
@@ -58,9 +59,18 @@ public class SpinButton extends ToggleButton {
         }
         else if (type == DOWN) {
             this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.downoff));
-            this.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    Handler.instance().handleEvent(BtnBpmDownClickEvent.instance());
+            this.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Handler.instance().handleEvent(BtnBpmDownClickEvent.instance());
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Handler.instance().handleEvent(BtnBpmDownTouchUpEvent.instance());
+                        break;
+                }
+                return true;
                 }
             });
         }

@@ -1,6 +1,7 @@
 package com.creation.diz.drumit.handler;
 
 import com.creation.diz.drumit.events.BtnBpmDownClickEvent;
+import com.creation.diz.drumit.events.BtnBpmDownTouchUpEvent;
 import com.creation.diz.drumit.events.BtnBpmUpClickEvent;
 import com.creation.diz.drumit.events.BtnBpmUpTouchUpEvent;
 import com.creation.diz.drumit.events.BtnExportClickEvent;
@@ -66,6 +67,10 @@ public class Handler {
 
     public void handleEvent(BtnBpmUpTouchUpEvent event) {
         HandleBtnBpmUpTouchUpEvent.instance().handle();
+    }
+
+    public void handleEvent(BtnBpmDownTouchUpEvent event) {
+        HandleBtnBpmDownTouchUpEvent.instance().handle();
     }
 
     public void handleEvent(BtnNewClickEvent event) {

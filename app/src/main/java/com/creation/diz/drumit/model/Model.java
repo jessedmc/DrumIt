@@ -22,7 +22,7 @@ import java.util.Iterator;
 
 public class Model {
     private static Model instance;
-    public final int NUM_OF_CELLS = 16, NUM_OF_SAMPLES = 10;
+    public final int NUM_OF_CELLS = 16, NUM_OF_SAMPLES = 10, MAX_BPM = 180, MIN_BPM = 40;
     private int selectedSequencerCell = 0;
     private int currentDrumKit = 0;
     private int[] playbackMessage;
@@ -64,6 +64,12 @@ public class Model {
 
     public void incrementBpm() {
         this.bpm.setBpm(this.bpm.getBpm() + 5);
+        this.bpm.setChanged();
+        this.updateView();
+    }
+
+    public void decrementBpm() {
+        this.bpm.setBpm(this.bpm.getBpm() - 5);
         this.bpm.setChanged();
         this.updateView();
     }

@@ -31,7 +31,9 @@ public class HandleBtnBpmUpClickEvent {
     public void handle() {
         Controller.instance().setBtnBpmUpTouchDown();
         if (Model.instance().isInPlayMode()) {
-            this.incrementBpm();
+            if (Model.instance().getBpm().getBpm() < Model.instance().MAX_BPM) {
+                this.incrementBpm();
+            }
         }
 
     }

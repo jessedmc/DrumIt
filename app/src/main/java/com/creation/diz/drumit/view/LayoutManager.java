@@ -47,6 +47,14 @@ public class LayoutManager {
     public static int DOWN_BUTTON_WIDTH = 0, DOWN_BUTTON_SPACE = 0, DOWN_BUTTON_PADDING_LEFT = 0, DOWN_BUTTON_PADDING_BOTTOM = 0;
     public static double DOWN_BUTTON_PADDING_BOTTOM_PERCENT = 0.1;
 
+    // changing text
+    public static int CHANGING_TEXT_PADDING_BOTTOM = 0, CHANGING_TEXT_FONT_SIZE = 14;
+    public static double CHANGING_TEXT_PADDING_BOTTOM_PERCENT = 0.04;
+
+    // up text
+    public static int UP_TEXT_PADDING_BOTTOM = 0, UP_TEXT_FONT_SIZE = 14;
+    public static double UP_TEXT_PADDING_BOTTOM_PERCENT = 0.04;
+
 
     // singleton constructor
     private LayoutManager() {
@@ -125,6 +133,13 @@ public class LayoutManager {
         DOWN_BUTTON_PADDING_LEFT = UP_BUTTON_PADDING_LEFT;
         DOWN_BUTTON_SPACE = UP_BUTTON_SPACE;
         DOWN_BUTTON_PADDING_BOTTOM = (int)(DOWN_BUTTON_PADDING_BOTTOM_PERCENT * SCREEN_HEIGHT);
+
+        // changing text
+        CHANGING_TEXT_PADDING_BOTTOM = (int)(CHANGING_TEXT_PADDING_BOTTOM_PERCENT * SCREEN_HEIGHT);
+
+        // up text
+        UP_TEXT_PADDING_BOTTOM = (int)(UP_TEXT_PADDING_BOTTOM_PERCENT * SCREEN_HEIGHT);
+
 
         // print stuff
         //this.printSamples();
