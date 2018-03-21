@@ -6,7 +6,7 @@ import com.creation.diz.drumit.events.BtnBpmUpClickEvent;
 import com.creation.diz.drumit.events.BtnBpmUpTouchUpEvent;
 import com.creation.diz.drumit.events.BtnExportClickEvent;
 import com.creation.diz.drumit.events.BtnNewClickEvent;
-import com.creation.diz.drumit.events.BtnNewTouchEvent;
+import com.creation.diz.drumit.events.BtnNewTouchDownEvent;
 import com.creation.diz.drumit.events.BtnPauseClickEvent;
 import com.creation.diz.drumit.events.BtnPlayClickEvent;
 import com.creation.diz.drumit.events.BtnSampleClickEvent;
@@ -77,8 +77,8 @@ public class Handler {
         HandleBtnNewClickEvent.instance().handle();
     }
 
-    public void handleEvent(BtnNewTouchEvent event) {
-        HandleBtnNewTouchEvent.instance().handle();
+    public void handleEvent(BtnNewTouchDownEvent event) {
+        HandleBtnNewTouchDownEvent.instance().handle();
     }
 }
 

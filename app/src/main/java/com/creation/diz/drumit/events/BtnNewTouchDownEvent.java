@@ -4,12 +4,12 @@ package com.creation.diz.drumit.events;
  * Created by Diz on 3/6/2018.
  */
 
-public class BtnNewTouchEvent {
-    private static BtnNewTouchEvent instance;
+public class BtnNewTouchDownEvent {
+    private static BtnNewTouchDownEvent instance;
     /**
      * Make it a singleton
      */
-    private BtnNewTouchEvent() {
+    private BtnNewTouchDownEvent() {
 
     }
 
@@ -18,9 +18,9 @@ public class BtnNewTouchEvent {
      *
      * @return the object
      */
-    public static BtnNewTouchEvent instance() {
+    public static BtnNewTouchDownEvent instance() {
         if (instance == null) {
-            instance = new BtnNewTouchEvent();
+            instance = new BtnNewTouchDownEvent();
         }
         return instance;
     }

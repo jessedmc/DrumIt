@@ -3,7 +3,6 @@ package com.creation.diz.drumit.view;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
-import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,12 +12,10 @@ import android.widget.ToggleButton;
 import com.creation.diz.drumit.R;
 import com.creation.diz.drumit.events.BtnExportClickEvent;
 import com.creation.diz.drumit.events.BtnNewClickEvent;
-import com.creation.diz.drumit.events.BtnNewTouchEvent;
+import com.creation.diz.drumit.events.BtnNewTouchDownEvent;
 import com.creation.diz.drumit.events.BtnPauseClickEvent;
 import com.creation.diz.drumit.events.BtnPlayClickEvent;
-import com.creation.diz.drumit.events.BtnSampleClickEvent;
 import com.creation.diz.drumit.handler.Handler;
-import com.creation.diz.drumit.model.Model;
 
 /**
  * Created by Diz on 2/6/2018.
@@ -88,7 +85,7 @@ public class PlayButton extends ToggleButton {
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            Handler.instance().handleEvent(BtnNewTouchEvent.instance());
+                            Handler.instance().handleEvent(BtnNewTouchDownEvent.instance());
                             break;
                         case MotionEvent.ACTION_UP:
                             Handler.instance().handleEvent(BtnNewClickEvent.instance());

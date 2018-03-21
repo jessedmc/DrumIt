@@ -6,12 +6,12 @@ import com.creation.diz.drumit.controller.Controller;
  * Created by Diz on 3/6/2018.
  */
 
-public class HandleBtnNewTouchEvent {
-    private static HandleBtnNewTouchEvent instance;
+public class HandleBtnNewTouchDownEvent {
+    private static HandleBtnNewTouchDownEvent instance;
     /**
      * Make it a singleton
      */
-    private HandleBtnNewTouchEvent() {
+    private HandleBtnNewTouchDownEvent() {
 
     }
 
@@ -20,9 +20,9 @@ public class HandleBtnNewTouchEvent {
      *
      * @return the object
      */
-    public static HandleBtnNewTouchEvent instance() {
+    public static HandleBtnNewTouchDownEvent instance() {
         if (instance == null) {
-            instance = new HandleBtnNewTouchEvent();
+            instance = new HandleBtnNewTouchDownEvent();
         }
         return instance;
     }
