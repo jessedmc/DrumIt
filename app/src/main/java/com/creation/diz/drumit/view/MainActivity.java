@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         // set testing textviews to blank
         //this.textView.setText("");
         this.textView2.setText("");
-        //this.textView.setVisibility(View.VISIBLE);
+        this.textView.setVisibility(View.INVISIBLE);
 
         // set txtSampleName to blank
         this.txtSampleName.setText("");
