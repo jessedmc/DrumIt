@@ -119,7 +119,7 @@ public class Model {
         Controller.instance().toTextView(str);
     }
 
-    public void clearSequencer() {
+    public void reset() {
         if (this.playMode.isInPlayMode()) {
             this.startPauseMode();
         }
@@ -138,6 +138,8 @@ public class Model {
         this.currentSample = sampleList.get(0);
         this.currentSample.setChanged();
         this.currentSequencerCell = new SequencerCell(-10);
+        this.bpm.setBpm(120);
+        this.bpm.setChanged();
         this.updateView();
     }
 

@@ -30,6 +30,6 @@ public class HandleBtnNewClickEvent {
 
     public void handle() {
         Controller.instance().setBtnNewTouchUp();
-        Model.instance().clearSequencer();
+        Model.instance().reset();
     }
 }
