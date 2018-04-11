@@ -77,6 +77,33 @@ public class Controller {
 
     // ****************** Getters Setters ******************** //
 
+    public boolean hasPitchChanged() {
+        return Model.instance().hasPitchChanged();
+    }
+
+    public boolean hasVolumeChanged() {
+        return Model.instance().hasVolumeChanged();
+    }
+
+    public int getPitch() {
+        return Model.instance().getPitch();
+    }
+
+    public int getVolume() {
+        return Model.instance().getVolume();
+    }
+
+    public float getRate(int sampleIndex) {
+        double pitch = (double)Model.instance().getPitch(sampleIndex);
+        double base = 5.0;
+        float rate = (float)(pitch / base);
+        return rate;
+    }
+
+    public float getVolume(int sampleIndex) {
+        return (float)((double)Model.instance().getVolume(sampleIndex) / 10.0);
+    }
+
     public boolean hasBpmViewChanged() {
         return Model.instance().getBpm().hasViewChanged();
     }
@@ -91,6 +118,38 @@ public class Controller {
 
     public void setBtnBpmUpTouchDown() {
         this.display.setBtnBpmUpTouchDown();
+    }
+
+    public void setBtnVolumeUpTouchDown() {
+        this.display.setBtnVolumeUpTouchDown();
+    }
+
+    public void setBtnVolumeUpTouchUp() {
+        this.display.setBtnVolumeUpTouchUp();
+    }
+
+    public void setBtnVolumeDownTouchDown() {
+        this.display.setBtnVolumeDownTouchDown();
+    }
+
+    public void setBtnVolumeDownTouchUp() {
+        this.display.setBtnVolumeDownTouchUp();
+    }
+
+    public void setBtnPitchUpTouchDown() {
+        this.display.setBtnPitchUpTouchDown();
+    }
+
+    public void setBtnPitchUpTouchUp() {
+        this.display.setBtnPitchUpTouchUp();
+    }
+
+    public void setBtnPitchDownTouchDown() {
+        this.display.setBtnPitchDownTouchDown();
+    }
+
+    public void setBtnPitchDownTouchUp() {
+        this.display.setBtnPitchDownTouchUp();
     }
 
     public void setBtnBpmDownTouchDown() {

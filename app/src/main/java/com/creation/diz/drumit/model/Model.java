@@ -6,7 +6,9 @@ import com.creation.diz.drumit.controller.Controller;
 import com.creation.diz.drumit.modes.PauseMode;
 import com.creation.diz.drumit.modes.PlayMode;
 import com.creation.diz.drumit.player.Bpm;
+import com.creation.diz.drumit.player.Pitch;
 import com.creation.diz.drumit.player.PlaybackTimer;
+import com.creation.diz.drumit.player.Volume;
 import com.creation.diz.drumit.samples.Sample;
 import com.creation.diz.drumit.samples.SampleList;
 import com.creation.diz.drumit.samples.SamplesUsed;
@@ -34,6 +36,8 @@ public class Model {
     private PlayMode playMode = PlayMode.instance();
     private PauseMode pauseMode = PauseMode.instance();
     private Bpm bpm = Bpm.instance();
+    private Pitch pitch = Pitch.instance();
+    private Volume volume = Volume.instance();
 
     // singleton constructor
     private Model() {
@@ -60,6 +64,42 @@ public class Model {
             instance = new Model();
         }
         return instance;
+    }
+
+    public int getPitch(int sampleIndex) {
+        return this.pitch.getPitch(sampleIndex);
+    }
+
+    public int getVolume(int sampleIndex) {
+        return this.volume.getVolume(sampleIndex);
+    }
+
+    public void incrementVolume() {
+        if (this.volume.incrementVolume(this.currentSample.getIndex())) {
+            this.volume.setChanged();
+            this.updateView();
+        }
+    }
+
+    public void decrementVolume() {
+        if (this.volume.decrementVolume(this.currentSample.getIndex())) {
+            this.volume.setChanged();
+            this.updateView();
+        }
+    }
+
+    public void incrementPitch() {
+        if (this.pitch.incrementPitch(this.currentSample.getIndex())) {
+            this.pitch.setChanged();
+            this.updateView();
+        }
+    }
+
+    public void decrementPitch() {
+        if (this.pitch.decrementPitch(this.currentSample.getIndex())) {
+            this.pitch.setChanged();
+            this.updateView();
+        }
     }
 
     public void incrementBpm() {
@@ -257,4 +297,21 @@ public class Model {
     public SamplesUsed getSamplesUsed() {
         return samplesUsed;
     }
+
+    public boolean hasPitchChanged() {
+        return pitch.hasChanged();
+    }
+
+    public boolean hasVolumeChanged() {
+        return volume.hasChanged();
+    }
+
+    public int getPitch() {
+        return pitch.getPitch(this.currentSample.getIndex());
+    }
+
+    public int getVolume() {
+        return volume.getVolume(this.currentSample.getIndex());
+    }
+
 }

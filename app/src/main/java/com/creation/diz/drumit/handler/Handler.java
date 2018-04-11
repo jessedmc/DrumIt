@@ -9,9 +9,17 @@ import com.creation.diz.drumit.events.BtnNewClickEvent;
 
 import com.creation.diz.drumit.events.BtnNewTouchDownEvent;
 import com.creation.diz.drumit.events.BtnPauseClickEvent;
+import com.creation.diz.drumit.events.BtnPitchDownClickEvent;
+import com.creation.diz.drumit.events.BtnPitchDownTouchUpEvent;
+import com.creation.diz.drumit.events.BtnPitchUpClickEvent;
+import com.creation.diz.drumit.events.BtnPitchUpTouchUpEvent;
 import com.creation.diz.drumit.events.BtnPlayClickEvent;
 import com.creation.diz.drumit.events.BtnSampleClickEvent;
 import com.creation.diz.drumit.events.BtnSequencerClickEvent;
+import com.creation.diz.drumit.events.BtnVolumeDownClickEvent;
+import com.creation.diz.drumit.events.BtnVolumeDownTouchUpEvent;
+import com.creation.diz.drumit.events.BtnVolumeUpClickEvent;
+import com.creation.diz.drumit.events.BtnVolumeUpTouchUpEvent;
 
 /**
  * Created by Diz on 1/27/2018.
@@ -66,12 +74,44 @@ public class Handler {
         HandleBtnBpmUpClickEvent.instance().handle();
     }
 
+    public void handleEvent(BtnPitchDownClickEvent event) {
+        HandleBtnPitchDownClickEvent.instance().handle();
+    }
+
+    public void handleEvent(BtnPitchUpClickEvent event) {
+        HandleBtnPitchUpClickEvent.instance().handle();
+    }
+
+    public void handleEvent(BtnVolumeDownClickEvent event) {
+        HandleBtnVolumeDownClickEvent.instance().handle();
+    }
+
+    public void handleEvent(BtnVolumeUpClickEvent event) {
+        HandleBtnVolumeUpClickEvent.instance().handle();
+    }
+
     public void handleEvent(BtnBpmUpTouchUpEvent event) {
         HandleBtnBpmUpTouchUpEvent.instance().handle();
     }
 
     public void handleEvent(BtnBpmDownTouchUpEvent event) {
         HandleBtnBpmDownTouchUpEvent.instance().handle();
+    }
+
+    public void handleEvent(BtnPitchUpTouchUpEvent event) {
+        HandleBtnPitchUpTouchUpEvent.instance().handle();
+    }
+
+    public void handleEvent(BtnPitchDownTouchUpEvent event) {
+        HandleBtnPitchDownTouchUpEvent.instance().handle();
+    }
+
+    public void handleEvent(BtnVolumeUpTouchUpEvent event) {
+        HandleBtnVolumeUpTouchUpEvent.instance().handle();
+    }
+
+    public void handleEvent(BtnVolumeDownTouchUpEvent event) {
+        HandleBtnVolumeDownTouchUpEvent.instance().handle();
     }
 
     public void handleEvent(BtnNewClickEvent event) {

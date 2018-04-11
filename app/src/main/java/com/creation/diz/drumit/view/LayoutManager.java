@@ -39,9 +39,10 @@ public class LayoutManager {
     public static double PLAY_BUTTON_PADDING_BOTTOM_PERCENT = 0.2;
 
     // up buttons
-    public static int UP_BUTTON_WIDTH = 0, UP_BUTTON_SPACE = 0, UP_BUTTON_PADDING_LEFT = 0, UP_BUTTON_PADDING_BOTTOM = 0;
-    public static double UP_BUTTON_WIDTH_PERCENT = 0.05, UP_BUTTON_SPACE_PERCENT = 0.03, UP_BUTTON_PADDING_LEFT_PERCENT = 0.1;
+    public static int UP_BUTTON_WIDTH = 0, UP_BUTTON_SPACE = 0, UP_BUTTON_PADDING_LEFT = 0, UP_BUTTON_PADDING_BOTTOM = 0, UP_BUTTON_PADDING_RIGHT = 0;
+    public static double UP_BUTTON_WIDTH_PERCENT = 0.05, UP_BUTTON_SPACE_PERCENT = 0.03, UP_BUTTON_PADDING_LEFT_PERCENT = 0.1, UP_BUTTON_PADDING_RIGHT_PERCENT = 0.1;
     public static double UP_BUTTON_PADDING_BOTTOM_PERCENT = 0.03;
+
 
     // down buttons
     public static int DOWN_BUTTON_WIDTH = 0, DOWN_BUTTON_SPACE = 0, DOWN_BUTTON_PADDING_LEFT = 0, DOWN_BUTTON_PADDING_BOTTOM = 0;
@@ -54,6 +55,10 @@ public class LayoutManager {
     // up text
     public static int UP_TEXT_PADDING_BOTTOM = 0, UP_TEXT_FONT_SIZE = 14;
     public static double UP_TEXT_PADDING_BOTTOM_PERCENT = 0.04;
+
+    // spin button space
+    public static int SPIN_BUTTON_SPACE = 0;
+    public static double SPIN_BUTTON_SPACE_PERCENT = 0.1;
 
 
     // singleton constructor
@@ -122,11 +127,14 @@ public class LayoutManager {
         PLAY_BUTTON_PADDING_LEFT = (int)(PLAY_BUTTON_PADDING_LEFT_PERCENT * SCREEN_WIDTH);
         PLAY_BUTTON_PADDING_BOTTOM = (int)(PLAY_BUTTON_PADDING_BOTTOM_PERCENT * SCREEN_HEIGHT);
 
+        // spin button space
+        SPIN_BUTTON_SPACE = (int)(SPIN_BUTTON_SPACE_PERCENT * SCREEN_WIDTH);
         // up buttons
         UP_BUTTON_WIDTH = (int)(UP_BUTTON_WIDTH_PERCENT * SCREEN_WIDTH);
         UP_BUTTON_PADDING_BOTTOM = (int)(UP_BUTTON_PADDING_BOTTOM_PERCENT * SCREEN_HEIGHT);
         UP_BUTTON_PADDING_LEFT = (int)(UP_BUTTON_PADDING_LEFT_PERCENT * SCREEN_WIDTH);
         UP_BUTTON_SPACE = (int)(UP_BUTTON_SPACE_PERCENT * SCREEN_WIDTH);
+        UP_BUTTON_PADDING_RIGHT = (int)(UP_BUTTON_PADDING_RIGHT_PERCENT * SCREEN_WIDTH);
 
         // down buttons
         DOWN_BUTTON_WIDTH = UP_BUTTON_WIDTH;

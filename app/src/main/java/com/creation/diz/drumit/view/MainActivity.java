@@ -45,8 +45,14 @@ public class MainActivity extends AppCompatActivity {
     SpinButton btnBpmDown;
     SpinButton btnPitchUp;
     SpinButton btnPitchDown;
+    SpinButton btnVolumeUp;
+    SpinButton btnVolumeDown;
     ChangingText bpmChangingText;
+    ChangingText volumeChangingText;
+    ChangingText pitchChangingText;
     UpText bpmUpText;
+    UpText pitchUpText;
+    UpText volumeUpText;
 
     // data
     SoundPool soundPool = new SoundPool.Builder().setMaxStreams(10).build();
@@ -120,8 +126,14 @@ public class MainActivity extends AppCompatActivity {
         this.btnExport = new PlayButton(this.getApplicationContext(), this.linearLayoutPlayPause, 3);
 
         // create spin buttons (up , down)
-        this.btnBpmUp = new SpinButton(this.getApplicationContext(), this.linearLayoutUp, 0, 100); // 100 is up   ,   101 is down
-        this.btnBpmDown = new SpinButton(this.getApplicationContext(), this.linearLayoutDown, 1, 101);
+        // 50 up , 51 down , 100 bpm , 200 volume , 300 pitch
+        this.btnBpmUp = new SpinButton(this.getApplicationContext(), this.linearLayoutUp, 0, 50, 100); // 100 is up   ,   101 is down
+        this.btnBpmDown = new SpinButton(this.getApplicationContext(), this.linearLayoutDown, 1, 51, 100);
+        this.btnPitchUp = new SpinButton(this.getApplicationContext(), this.linearLayoutUp, 0, 50, 300); // 100 is up   ,   101 is down
+        this.btnPitchDown = new SpinButton(this.getApplicationContext(), this.linearLayoutDown, 1, 51, 300);
+        this.btnVolumeUp = new SpinButton(this.getApplicationContext(), this.linearLayoutUp, 0, 50, 200); // 100 is up   ,   101 is down
+        this.btnVolumeDown = new SpinButton(this.getApplicationContext(), this.linearLayoutDown, 1, 51, 200);
+
 
         // create sequencer buttons for GUI
         this.btnSequencer = new SequencerButton[Controller.instance().getNumOfSequencerCells()];
@@ -139,11 +151,15 @@ public class MainActivity extends AppCompatActivity {
         //this.linearLayoutSample.setTop((int)(0.2 * SampleButton.getScreenHeight()));
 
         // create changing textviews for GUI
+        // 100 bpm , 200 volume , 300 pitch
         this.bpmChangingText = new ChangingText(this.getApplicationContext(), 100, this.linearLayoutChangingText);
+        this.pitchChangingText = new ChangingText(this.getApplicationContext(), 300, this.linearLayoutChangingText);
+        this.volumeChangingText = new ChangingText(this.getApplicationContext(), 200, this.linearLayoutChangingText);
 
         // create up textviews for GUI
         this.bpmUpText = new UpText(this.getApplicationContext(), 100, this.linearLayoutUpText);
-
+        this.volumeUpText = new UpText(this.getApplicationContext(), 200, this.linearLayoutUpText);
+        this.pitchUpText = new UpText(this.getApplicationContext(), 300, this.linearLayoutUpText);
 
         // sequencer cell indicator layout
         this.seqCellIndicator.setPadding(30, 0, 0, 20);
@@ -196,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         // set testing textviews to blank
         //this.textView.setText("");
         this.textView2.setText("");
-        this.textView.setVisibility(View.INVISIBLE);
+        this.textView.setVisibility(View.VISIBLE);
 
         // set txtSampleName to blank
         this.txtSampleName.setText("");
@@ -226,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (Controller.instance().getCurrentSampleHasChanged()) {
             //Controller.instance().printSequencerAndSampleList();
+            this.pitchChangingText.setText(String.valueOf(Controller.instance().getPitch()));
+            this.volumeChangingText.setText(String.valueOf(Controller.instance().getVolume()));
             // sequencer cells that have current sample
             for (int i = 0; i < 16; i++) {
                 if (Controller.instance().getCellAndSampleMatchCurrentSample(i)) {
@@ -319,18 +337,57 @@ public class MainActivity extends AppCompatActivity {
             this.bpmChangingText.setText(String.valueOf(Controller.instance().getBpm()));
         }
 
+        if (Controller.instance().hasPitchChanged()) {
+            this.pitchChangingText.setText(String.valueOf(Controller.instance().getPitch()));
+        }
+
+        if (Controller.instance().hasVolumeChanged()) {
+            this.volumeChangingText.setText(String.valueOf(Controller.instance().getVolume()));
+        }
 
     }// end update
 
     public void updatePlayer(int[] soundIndex) {
         if (soundIndex.length == 1) {
-            this.soundPool.play(soundIndex[0] + 1, 1.0f, 1.0f, 0, 0, 1.0f);
+            this.soundPool.play(soundIndex[0] + 1, Controller.instance().getVolume(soundIndex[0]), Controller.instance().getVolume(soundIndex[0]), 0, 0, Controller.instance().getRate(soundIndex[0]));
         }
         else if (soundIndex.length > 1) {
             for (int i = 0; i < soundIndex.length; i++) {
-                this.soundPool.play(soundIndex[i] + 1, 1.0f, 1.0f, 0, 0, 1.0f);
+                this.soundPool.play(soundIndex[i] + 1, Controller.instance().getVolume(soundIndex[i] ), Controller.instance().getVolume(soundIndex[i]), 0, 0, Controller.instance().getRate(soundIndex[i]));
             }
         }
+    }
+
+    public void setBtnPitchUpTouchDown() {
+        this.btnPitchUp.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.upon));
+    }
+
+    public void setBtnPitchUpTouchUp() {
+        this.btnPitchUp.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.upoff));
+    }
+
+    public void setBtnVolumeUpTouchDown() {
+        this.btnVolumeUp.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.upon));
+    }
+
+    public void setBtnVolumeUpTouchUp() {
+        this.btnVolumeUp.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.upoff));
+    }
+
+    public void setBtnPitchDownTouchUp() {
+        this.btnPitchDown.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.downoff));
+    }
+
+    public void setBtnVolumeDownTouchUp() {
+        this.btnVolumeDown.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.downoff));
+    }
+
+    public void setBtnPitchDownTouchDown() {
+        this.btnPitchDown.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.downon));
+    }
+
+    public void setBtnVolumeDownTouchDown() {
+        this.btnVolumeDown.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.downon));
     }
 
     public void setBtnNewTouchDown() {

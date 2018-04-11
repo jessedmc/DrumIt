@@ -91,7 +91,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutChangingText"
         app:layout_constraintLeft_toRightOf="@+id/linearLayoutPlayPause"
-        app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"></LinearLayout>
+        app:layout_constraintRight_toRightOf="@+id/linearLayoutSequencer"></LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutDown"
@@ -100,7 +100,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutSequencer"
         app:layout_constraintLeft_toRightOf="@+id/linearLayoutPlayPause"
-        app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"></LinearLayout>
+        app:layout_constraintRight_toRightOf="@id/linearLayoutSequencer"></LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutChangingText"
@@ -109,7 +109,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutDown"
         app:layout_constraintLeft_toRightOf="@+id/linearLayoutPlayPause"
-        app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"></LinearLayout>
+        app:layout_constraintRight_toRightOf="@+id/linearLayoutSequencer"></LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutUpText"
@@ -118,6 +118,6 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutUp"
         app:layout_constraintLeft_toRightOf="@+id/linearLayoutPlayPause"
-        app:layout_constraintRight_toRightOf="@+id/linearLayoutPlayPause"></LinearLayout>
+        app:layout_constraintRight_toRightOf="@id/linearLayoutSequencer"></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
